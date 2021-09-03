@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
 
 import '../utils/fixtures/fixture_reader.dart';
@@ -13,6 +14,10 @@ void main() {
   const tNotFavouriteSentence = SentenceDTO(
     "Take ownership and question the status quo in a constructive manner",
     false,
+  );
+  const tSentence = Sentence(
+    "Exceed clients' and colleagues' expectations",
+    true,
   );
 
   group('toJson', () {
@@ -47,12 +52,18 @@ void main() {
 
     test(
         'should convert json with isFavourite equals false to sentenceDTO with isFavourite equals false',
-            () {
-          final jsonMap = json.decode(fixture('not_favourite_sentence.json'));
-          final sentence = SentenceDTO.fromJson(jsonMap);
+        () {
+      final jsonMap = json.decode(fixture('not_favourite_sentence.json'));
+      final sentence = SentenceDTO.fromJson(jsonMap);
 
-          expect(sentence, tNotFavouriteSentence);
-        });
+      expect(sentence, tNotFavouriteSentence);
+    });
+  });
 
+  group('fromDomain', () {
+    test('should convert Sentence to SentenceDTO', () {
+      final dto = SentenceDTO.fromDomain(tSentence);
+      expect(dto, tFavouriteSentence);
+    });
   });
 }

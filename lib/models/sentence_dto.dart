@@ -19,4 +19,11 @@ class SentenceDTO extends Sentence {
       'isFavourite': isFavourite,
     };
   }
+
+  factory SentenceDTO.fromDomain(Sentence sentence) {
+    return SentenceDTO(
+      sentence.value,
+      sentence.isFavourite,
+    );
+  }
 }
