@@ -7,17 +7,17 @@ import 'package:netguru_values_generator/models/sentence_dto.dart';
 import '../utils/fixtures/fixture_reader.dart';
 
 void main() {
-  const tFavouriteSentence = SentenceDTO(
+  final tFavouriteSentence = SentenceDTO(
     "Exceed clients' and colleagues' expectations",
     true,
   );
-  const tNotFavouriteSentence = SentenceDTO(
+  final tNotFavouriteSentence = SentenceDTO(
     "Take ownership and question the status quo in a constructive manner",
     false,
   );
   const tSentence = Sentence(
     "Exceed clients' and colleagues' expectations",
-    true,
+    isFavourite: true,
   );
 
   group('toJson', () {

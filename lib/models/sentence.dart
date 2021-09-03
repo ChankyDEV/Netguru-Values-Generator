@@ -4,7 +4,10 @@ class Sentence extends Equatable {
   final String value;
   final bool isFavourite;
 
-  const Sentence(this.value, this.isFavourite);
+  const Sentence(
+    this.value, {
+    this.isFavourite = false,
+  });
 
   @override
   List<Object?> get props => [

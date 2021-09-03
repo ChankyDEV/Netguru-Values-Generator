@@ -1,10 +1,16 @@
 import 'package:netguru_values_generator/models/sentence.dart';
 
 class SentenceDTO extends Sentence {
-  const SentenceDTO(
-    String value,
-    bool isFavourite,
-  ) : super(value, isFavourite);
+  final String value;
+  final bool isFavourite;
+
+  SentenceDTO(
+    this.value,
+    this.isFavourite,
+  ) : super(
+          value,
+          isFavourite: isFavourite,
+        );
 
   factory SentenceDTO.fromJson(Map<String, dynamic> jsonMap) {
     return SentenceDTO(
@@ -12,6 +18,15 @@ class SentenceDTO extends Sentence {
       jsonMap['isFavourite'],
     );
   }
+
+  SentenceDTO copyWith({
+    String? value,
+    bool? isFavourite,
+  }) =>
+      SentenceDTO(
+        value ?? this.value,
+        isFavourite ?? this.isFavourite,
+      );
 
   Map<String, dynamic> toJson() {
     return {

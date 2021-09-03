@@ -15,7 +15,7 @@ void main() async {
   late SentenceService service;
   late MockSentenceRepository repository;
 
-  const sentenceToSave = Sentence('value1', true);
+  const sentenceToSave = Sentence('value1', isFavourite: true);
   final tSentences = [
     SentenceDTO('value1', true),
     SentenceDTO('value2', true),
