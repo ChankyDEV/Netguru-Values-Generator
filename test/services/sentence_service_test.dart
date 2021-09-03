@@ -5,8 +5,8 @@ import 'package:netguru_values_generator/models/exceptions.dart';
 import 'package:netguru_values_generator/models/failure.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
-import 'package:netguru_values_generator/services/sentence_service.dart';
-import 'package:netguru_values_generator/services/sentence_service_impl.dart';
+import 'package:netguru_values_generator/services/sentence/sentence_service.dart';
+import 'package:netguru_values_generator/services/sentence/sentence_service_impl.dart';
 import 'package:netguru_values_generator/utils/consts.dart';
 
 import '../utils/mocks/sentence_repository_mock.dart';

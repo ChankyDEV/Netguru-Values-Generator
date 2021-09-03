@@ -2,19 +2,19 @@ import 'dart:convert';
 
 import 'package:netguru_values_generator/models/exceptions.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
-import 'package:netguru_values_generator/reposiories/sentence_repository.dart';
+import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const SENTENCES = 'sentences';
 
 class SentenceRepositoryImpl implements SentenceRepository {
-  final SharedPreferences _prefs;
+  final SharedPreferences _preferences;
 
-  SentenceRepositoryImpl(this._prefs);
+  SentenceRepositoryImpl(this._preferences);
 
   @override
   Future<List<SentenceDTO>> getAllSentences() {
-    final sentencesString = _prefs.getString(SENTENCES);
+    final sentencesString = _preferences.getString(SENTENCES);
     if (sentencesString != null) {
       final sentences = _getFavouritesFromString<SentenceDTO>(
         sentencesString,
@@ -31,7 +31,7 @@ class SentenceRepositoryImpl implements SentenceRepository {
     int index,
   ) async {
     sentences[index] = sentence;
-    final isSentenceSaved = await _prefs.setString(
+    final isSentenceSaved = await _preferences.setString(
       SENTENCES,
       json.encode(sentences),
     );
@@ -46,7 +46,7 @@ class SentenceRepositoryImpl implements SentenceRepository {
       [List<SentenceDTO>? sentences]) async {
     sentences = sentences ?? [];
     sentences.add(sentence);
-    final isSentenceSaved = await _prefs.setString(
+    final isSentenceSaved = await _preferences.setString(
       SENTENCES,
       json.encode(sentences),
     );
@@ -59,7 +59,7 @@ class SentenceRepositoryImpl implements SentenceRepository {
 
   @override
   Future<SentenceDTO> saveSentence(SentenceDTO sentence) async {
-    final sentencesString = _prefs.getString(SENTENCES);
+    final sentencesString = _preferences.getString(SENTENCES);
     if (sentencesString != null) {
       final sentences = _getFavouritesFromString<SentenceDTO>(
         sentencesString,

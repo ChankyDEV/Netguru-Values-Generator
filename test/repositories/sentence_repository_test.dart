@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:netguru_values_generator/models/exceptions.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
-import 'package:netguru_values_generator/reposiories/sentence_repository.dart';
-import 'package:netguru_values_generator/reposiories/sentence_repository_impl.dart';
+import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
+import 'package:netguru_values_generator/reposiories/sentence/sentence_repository_impl.dart';
 
 import '../utils/fixtures/fixture_reader.dart';
 import '../utils/mocks/shared_prefrences_mock.dart';

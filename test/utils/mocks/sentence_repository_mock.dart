@@ -1,6 +1,6 @@
 import 'package:mockito/mockito.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
-import 'package:netguru_values_generator/reposiories/sentence_repository.dart';
+import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
 
 class MockSentenceRepository extends Mock implements SentenceRepository {
   @override
