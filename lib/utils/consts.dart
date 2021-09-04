@@ -3,6 +3,7 @@ class SentenceErrorMessages {
   final cantSaveSentence = 'Could not save a sentence';
   final cantReplaceAllSentences = 'Could not save all sentences';
   final noFavouriteSentences = 'There is no favourite sentences in database';
+  final sentenceValueIsNotValid = 'Sentence value is not valid';
 }
 
 mixin ErrorMessages {

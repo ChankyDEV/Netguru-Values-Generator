@@ -4,14 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:netguru_values_generator/models/exceptions.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
-import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
 import 'package:netguru_values_generator/reposiories/sentence/sentence_repository_impl.dart';
+import 'package:netguru_values_generator/utils/consts.dart';
 
 import '../utils/fixtures/fixture_reader.dart';
 import '../utils/mocks/shared_prefrences_mock.dart';
 
 void main() {
-  late SentenceRepository repository;
+  late SentenceRepositoryImpl repository;
   late MockSharedPreferences mockSharedPreferences;
 
   setUpAll(() {
@@ -122,8 +122,24 @@ void main() {
       }
     ];
 
+    final tNotValidSentence =
+        SentenceDTO('123', 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu', true);
+    test('should throw SentenceException with message if sentence is not valid',
+        () async {
+      final call = repository.saveSentence;
+
+      expect(
+        () => call(tNotValidSentence),
+        throwsA(
+          SentenceException(
+            message: ErrorMessages.sentences.sentenceValueIsNotValid,
+          ),
+        ),
+      );
+    });
+
     test(
-        'should return SentenceDTO if successfully saved when sentence was in favourites',
+        'should return SentenceDTO if successfully saved when sentence was in list',
         () async {
       when(mockSharedPreferences.getString(any)).thenReturn(
         fixture('sentences.json'),
@@ -144,7 +160,7 @@ void main() {
     });
 
     test(
-        'should throw SentenceException if unsuccessfully saved when sentence was in favourites',
+        'should throw SentenceException if unsuccessfully saved when sentence was in list',
         () async {
       when(mockSharedPreferences.getString(any)).thenReturn(
         fixture('sentences.json'),
@@ -247,6 +263,144 @@ void main() {
         () => call(tNewSentence),
         throwsA(TypeMatcher<SentenceException>()),
       );
+    });
+  });
+
+  group('replaceAll', () {
+    final sentences = [
+      SentenceDTO('123', 'value1', true),
+      SentenceDTO('124', 'value2', true),
+    ];
+    final sentencesMap = [
+      {"uid": "123", "value": "value1", "isFavourite": true},
+      {"uid": "124", "value": "value2", "isFavourite": true}
+    ];
+
+    test('should perform a setString on particular key', () async {
+      when(mockSharedPreferences.setString(any, any))
+          .thenAnswer((_) async => true);
+      await repository.replaceAll(sentences);
+      verify(
+        mockSharedPreferences.setString(
+          SENTENCES,
+          json.encode(sentencesMap),
+        ),
+      );
+    });
+
+    test('should throw a SentenceException if could not replaceAll', () async {
+      when(mockSharedPreferences.setString(any, any))
+          .thenAnswer((_) async => false);
+      final call = repository.replaceAll;
+
+      expect(
+        () => call(sentences),
+        throwsA(
+          TypeMatcher<SentenceException>(),
+        ),
+      );
+    });
+  });
+
+  group('areSentencesValuesValid', () {
+    final sentences = [
+      SentenceDTO('123', 'value1', true),
+      SentenceDTO('124', 'value2', true),
+    ];
+
+    final notValidSentences = [
+      SentenceDTO('123', 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu', true),
+      SentenceDTO('124', 'value2', true),
+    ];
+
+    test('should return true if values are valid', () {
+      final areValid = repository.areSentencesValuesValid(sentences);
+      expect(areValid, true);
+    });
+
+    test('should return false if one of values are not valid', () {
+      final areValid = repository.areSentencesValuesValid(notValidSentences);
+      expect(areValid, false);
+    });
+  });
+
+  group('validateSentence', () {
+    final validSentence = SentenceDTO('123', 'value1', true);
+    final notValidSentence1 =
+        SentenceDTO('123', 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu', true);
+    final notValidSentence2 = SentenceDTO(
+        '123', 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBCaWdJbnRlZ2Vy', true);
+    final notValidSentence3 =
+        SentenceDTO('123', 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBEb3VibGUu', true);
+    final notValidSentence4 = SentenceDTO('123', '', true);
+
+    test('should return true if sentence is valid', () {
+      final isValid = repository.validateSentence(validSentence);
+      expect(isValid, true);
+    });
+    test('should return false if sentence is not valid 1', () {
+      final isValid = repository.validateSentence(notValidSentence1);
+      expect(isValid, false);
+    });
+    test('should return false if sentence is not valid 2', () {
+      final isValid = repository.validateSentence(notValidSentence2);
+      expect(isValid, false);
+    });
+    test('should return false if sentence is not valid 3', () {
+      final isValid = repository.validateSentence(notValidSentence3);
+      expect(isValid, false);
+    });
+    test('should return false if sentence is not valid - empty value', () {
+      final isValid = repository.validateSentence(notValidSentence4);
+      expect(isValid, false);
+    });
+  });
+
+  group('getFavouriteSentences', () {
+    final tFavouritesSentences = [
+      SentenceDTO(
+        '120',
+        "Exceed clients' and colleagues' expectations",
+        true,
+      ),
+      SentenceDTO(
+        '126',
+        "Recognize excellence and engagement",
+        true,
+      ),
+    ];
+
+    test('should return favourite sentences', () async {
+      when(mockSharedPreferences.getString(any)).thenReturn(
+        fixture('sentences_with_favourites.json'),
+      );
+      final favourites = await repository.getFavouriteSentences();
+      verify(mockSharedPreferences.getString(SENTENCES));
+      expect(favourites, tFavouritesSentences);
+    });
+
+    test('should throw exception if there is no favourites', () async {
+      when(mockSharedPreferences.getString(any)).thenReturn(
+        fixture('sentences.json'),
+      );
+      final call = repository.getFavouriteSentences;
+      expect(
+          () => call(),
+          throwsA(
+            SentenceException(
+              message: ErrorMessages.sentences.noFavouriteSentences,
+            ),
+          ));
+    });
+
+    test('should throw exception if there is no sentences at all', () async {
+      when(mockSharedPreferences.getString(any)).thenReturn(null);
+      final call = repository.getFavouriteSentences;
+      expect(
+          () => call(),
+          throwsA(
+            SentenceException(),
+          ));
     });
   });
 }

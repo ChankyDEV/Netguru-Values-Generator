@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:netguru_values_generator/models/exceptions.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
 import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
+import 'package:netguru_values_generator/utils/consts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const SENTENCES = 'sentences';
@@ -14,15 +16,41 @@ class SentenceRepositoryImpl implements SentenceRepository {
 
   @override
   Future<List<SentenceDTO>> getAllSentences() {
+    final sentences = _getAllSentences();
+    if (sentences.isNotEmpty) {
+      return Future.value(sentences);
+    } else {
+      throw SentenceException();
+    }
+  }
+
+  @override
+  Future<List<SentenceDTO>> getFavouriteSentences() {
+    final sentences = _getAllSentences();
+    if (sentences.isNotEmpty) {
+      final favourites =
+          sentences.where((sentence) => sentence.isFavourite).toList();
+      if (favourites.isNotEmpty) {
+        return Future.value(favourites);
+      } else {
+        throw SentenceException(
+          message: ErrorMessages.sentences.noFavouriteSentences,
+        );
+      }
+    }
+    throw SentenceException();
+  }
+
+  List<SentenceDTO> _getAllSentences() {
     final sentencesString = _preferences.getString(SENTENCES);
     if (sentencesString != null) {
       final sentences = _getFavouritesFromString<SentenceDTO>(
         sentencesString,
         onConversion: (jsonMap) => SentenceDTO.fromJson(jsonMap),
       );
-      return Future.value(sentences);
+      return sentences;
     }
-    throw SentenceException();
+    return <SentenceDTO>[];
   }
 
   Future<SentenceDTO> _updateAlreadyExistingSentenceAtIndex(
@@ -59,26 +87,33 @@ class SentenceRepositoryImpl implements SentenceRepository {
 
   @override
   Future<SentenceDTO> saveSentence(SentenceDTO sentence) async {
-    final sentencesString = _preferences.getString(SENTENCES);
-    if (sentencesString != null) {
-      final sentences = _getFavouritesFromString<SentenceDTO>(
-        sentencesString,
-        onConversion: (jsonMap) => SentenceDTO.fromJson(jsonMap),
-      );
-      final index = sentences.indexWhere(
-        (element) => element.value == sentence.value,
-      );
-      if (index != -1) {
-        return await _updateAlreadyExistingSentenceAtIndex(
-          sentence,
-          sentences,
-          index,
+    final isValid = validateSentence(sentence);
+    if (isValid) {
+      final sentencesString = _preferences.getString(SENTENCES);
+      if (sentencesString != null) {
+        final sentences = _getFavouritesFromString<SentenceDTO>(
+          sentencesString,
+          onConversion: (jsonMap) => SentenceDTO.fromJson(jsonMap),
         );
-      } else {
-        return await _addNewSentence(sentence, sentences);
+        final index = sentences.indexWhere(
+          (element) => element.value == sentence.value,
+        );
+        if (index != -1) {
+          return await _updateAlreadyExistingSentenceAtIndex(
+            sentence,
+            sentences,
+            index,
+          );
+        } else {
+          return await _addNewSentence(sentence, sentences);
+        }
       }
+      return await _addNewSentence(sentence);
+    } else {
+      throw SentenceException(
+        message: ErrorMessages.sentences.sentenceValueIsNotValid,
+      );
     }
-    return await _addNewSentence(sentence);
   }
 
   List<T> _getFavouritesFromString<T>(
@@ -94,14 +129,33 @@ class SentenceRepositoryImpl implements SentenceRepository {
   }
 
   @override
-  Future<void> replaceAll(List<SentenceDTO> sentences) {
-    // TODO: implement replaceAll
-    throw UnimplementedError();
+  Future<void> replaceAll(List<SentenceDTO> sentences) async {
+    final areValid = areSentencesValuesValid(sentences);
+    if (areValid) {
+      final areSentencesSaved = await _preferences.setString(
+        SENTENCES,
+        json.encode(sentences),
+      );
+      if (!areSentencesSaved) {
+        throw SentenceException();
+      }
+    } else {
+      throw SentenceException(
+        message: ErrorMessages.sentences.sentenceValueIsNotValid,
+      );
+    }
   }
 
-  @override
-  Future<List<SentenceDTO>> getFavouriteSentences() {
-    // TODO: implement getFavouriteSentences
-    throw UnimplementedError();
+  @visibleForTesting
+  bool areSentencesValuesValid(List<SentenceDTO> sentences) => sentences.every(
+        (sentence) => validateSentence(sentence),
+      );
+
+  @visibleForTesting
+  bool validateSentence(SentenceDTO sentence) {
+    return sentence.value != 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBhIGxpc3Qu' &&
+        sentence.value != 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBCaWdJbnRlZ2Vy' &&
+        sentence.value != 'VGhpcyBpcyB0aGUgcHJlZml4IGZvciBEb3VibGUu' &&
+        sentence.value.isNotEmpty;
   }
 }
