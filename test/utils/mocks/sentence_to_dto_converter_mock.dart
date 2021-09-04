@@ -13,4 +13,13 @@ class MockSentenceToDtoConverter extends Mock
       returnValue: SentenceDTO('', '', false),
     );
   }
+
+  @override
+  List<SentenceDTO> convertAll(List<Sentence>? sentences) {
+    return super.noSuchMethod(
+      Invocation.method(#convert, [sentences]),
+      returnValueForMissingStub: [SentenceDTO('', '', false)],
+      returnValue: [SentenceDTO('', '', false)],
+    );
+  }
 }

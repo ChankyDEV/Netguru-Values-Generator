@@ -98,4 +98,10 @@ class SentenceRepositoryImpl implements SentenceRepository {
     // TODO: implement replaceAll
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<SentenceDTO>> getFavouriteSentences() {
+    // TODO: implement getFavouriteSentences
+    throw UnimplementedError();
+  }
 }

@@ -92,4 +92,86 @@ void main() async {
       );
     });
   });
+
+  group('replaceAll', () {
+    final tListSentences = <Sentence>[Sentence('value', false)];
+    final tListDtos = <SentenceDTO>[SentenceDTO('123', 'value', false)];
+    test('should return unit if successfully replaced list in cache', () async {
+      when(converter.convertAll(any)).thenReturn(tListDtos);
+      when(repository.replaceAll(any)).thenAnswer((_) async => null);
+      final result = await service.replaceAll(tListSentences);
+      verify(converter.convertAll(tListSentences));
+      verify(repository.replaceAll(tListDtos));
+      expect(result, right(unit));
+    });
+
+    test('should return failure if unsuccessfully replaced list in cache',
+        () async {
+      when(converter.convertAll(any)).thenReturn(tListDtos);
+      when(repository.replaceAll(any)).thenThrow(SentenceException());
+      final result = await service.replaceAll(tListSentences);
+      verify(converter.convertAll(tListSentences));
+      verify(repository.replaceAll(tListDtos));
+      expect(
+        result,
+        left(
+          Failure(ErrorMessages.sentences.cantReplaceAllSentences),
+        ),
+      );
+    });
+  });
+
+  final tFavouritesDtos = [
+    SentenceDTO('123', 'value1', true),
+    SentenceDTO('124', 'value2', true),
+  ];
+
+  group('getFavourites', () {
+    test('should return right list of sentences if successfully can get them',
+        () async {
+      when(repository.getFavouriteSentences())
+          .thenAnswer((_) async => tFavouritesDtos);
+      final result = await service.getFavouriteSentences();
+      verify(repository.getFavouriteSentences());
+      expect(
+        result,
+        right(tFavouritesDtos),
+      );
+    });
+
+    test('should return left failure with message if there is no favourites',
+        () async {
+      when(repository.getFavouriteSentences()).thenThrow(
+        SentenceException(
+          message: ErrorMessages.sentences.noFavouriteSentences,
+        ),
+      );
+      final result = await service.getFavouriteSentences();
+      verify(repository.getFavouriteSentences());
+      expect(
+        result,
+        left(
+          Failure(ErrorMessages.sentences.noFavouriteSentences),
+        ),
+      );
+    });
+
+    test(
+        'should return left failure with message if there were problem to get them',
+        () async {
+      when(repository.getFavouriteSentences()).thenThrow(
+        SentenceException(
+          message: ErrorMessages.sentences.cantGetSentences,
+        ),
+      );
+      final result = await service.getFavouriteSentences();
+      verify(repository.getFavouriteSentences());
+      expect(
+        result,
+        left(
+          Failure(ErrorMessages.sentences.cantGetSentences),
+        ),
+      );
+    });
+  });
 }

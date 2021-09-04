@@ -7,7 +7,20 @@ class SentenceToDtoConverter {
 
   SentenceToDtoConverter(this._generator);
 
-  SentenceDTO convert(Sentence sentence) {
+  SentenceDTO convert(Sentence sentence) => _convert(sentence);
+
+  List<SentenceDTO> convertAll(List<Sentence> sentences) {
+    final uid = _generator.v4();
+    final dtos = <SentenceDTO>[];
+    sentences.forEach((sentence) {
+      dtos.add(
+        _convert(sentence),
+      );
+    });
+    return dtos;
+  }
+
+  SentenceDTO _convert(Sentence sentence) {
     final uid = _generator.v4();
     return SentenceDTO(
       uid,

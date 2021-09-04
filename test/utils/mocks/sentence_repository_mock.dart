@@ -24,4 +24,22 @@ class MockSentenceRepository extends Mock implements SentenceRepository {
       ),
     );
   }
+
+  @override
+  Future<void> replaceAll(List<SentenceDTO>? sentences) {
+    return super.noSuchMethod(
+      Invocation.method(#replaceAll, [sentences]),
+      returnValueForMissingStub: Future.value(),
+      returnValue: Future.value(),
+    );
+  }
+
+  @override
+  Future<List<SentenceDTO>> getFavouriteSentences() {
+    return super.noSuchMethod(
+      Invocation.method(#getFavouriteSentences, null),
+      returnValueForMissingStub: Future.value(<SentenceDTO>[]),
+      returnValue: Future.value(<SentenceDTO>[]),
+    );
+  }
 }

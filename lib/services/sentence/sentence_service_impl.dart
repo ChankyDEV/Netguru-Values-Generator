@@ -46,4 +46,30 @@ class SentenceServiceImpl implements SentenceService {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> replaceAll(List<Sentence> sentences) async {
+    try {
+      await _repository.replaceAll(
+        _converter.convertAll(sentences),
+      );
+      return right(unit);
+    } on SentenceException {
+      return left(Failure(
+        ErrorMessages.sentences.cantReplaceAllSentences,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Sentence>>> getFavouriteSentences() async {
+    try {
+      final favourites = await _repository.getFavouriteSentences();
+      return right(favourites);
+    } on SentenceException catch (e) {
+      return left(
+        Failure(e.message),
+      );
+    }
+  }
 }
