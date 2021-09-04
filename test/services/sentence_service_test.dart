@@ -10,21 +10,29 @@ import 'package:netguru_values_generator/services/sentence/sentence_service_impl
 import 'package:netguru_values_generator/utils/consts.dart';
 
 import '../utils/mocks/sentence_repository_mock.dart';
+import '../utils/mocks/sentence_to_dto_converter_mock.dart';
 
 void main() async {
   late SentenceService service;
   late MockSentenceRepository repository;
+  late MockSentenceToDtoConverter converter;
 
-  const sentenceToSave = Sentence('value1', isFavourite: true);
+  final sentenceToSave = Sentence(
+    'value1',
+    true,
+  );
+  final saveSentenceWithUid = SentenceDTO('120', 'value1', true);
+
   final tSentences = [
-    SentenceDTO('value1', true),
-    SentenceDTO('value2', true),
-    SentenceDTO('value3', true),
+    SentenceDTO('120', 'value1', true),
+    SentenceDTO('121', 'value2', true),
+    SentenceDTO('122', 'value3', true),
   ];
 
   setUpAll(() {
+    converter = MockSentenceToDtoConverter();
     repository = MockSentenceRepository();
-    service = SentenceServiceImpl(repository);
+    service = SentenceServiceImpl(repository, converter);
   });
 
   group('getAllSentences', () {
@@ -57,13 +65,10 @@ void main() async {
   group('saveSentence', () {
     test('should return right(Sentence) if saved sentence properly', () async {
       when(repository.saveSentence(any)).thenAnswer((_) async => tSentences[0]);
+      when(converter.convert(any)).thenReturn(saveSentenceWithUid);
       final sentence = await service.saveSentence(sentenceToSave);
 
-      verify(
-        repository.saveSentence(
-          SentenceDTO.fromDomain(sentenceToSave),
-        ),
-      );
+      verify(converter.convert(sentenceToSave));
       expect(
         sentence,
         right(tSentences[0]),
@@ -73,12 +78,10 @@ void main() async {
     test('should return left(Failure) if saved sentence went unsuccessfully',
         () async {
       when(repository.saveSentence(any)).thenThrow(SentenceException());
+      when(converter.convert(any)).thenReturn(saveSentenceWithUid);
       final sentence = await service.saveSentence(sentenceToSave);
-      verify(
-        repository.saveSentence(
-          SentenceDTO.fromDomain(sentenceToSave),
-        ),
-      );
+
+      verify(converter.convert(sentenceToSave));
       expect(
         sentence,
         left(

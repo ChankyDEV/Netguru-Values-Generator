@@ -21,20 +21,38 @@ void main() {
 
   group('getAllSentences', () {
     final tSentences = [
-      SentenceDTO("Exceed clients' and colleagues' expectations", false),
       SentenceDTO(
+        '120',
+        "Exceed clients' and colleagues' expectations",
+        false,
+      ),
+      SentenceDTO(
+          '121',
           "Take ownership and question the status quo in a constructive manner",
           false),
       SentenceDTO(
+          '122',
           "Be brave, curious and experiment. Learn from all successes and failures",
           false),
-      SentenceDTO("Act in a way that makes all of us proud", false),
       SentenceDTO(
+        '123',
+        "Act in a way that makes all of us proud",
+        false,
+      ),
+      SentenceDTO(
+          '124',
           "Build an inclusive, transparent and socially responsible culture",
           false),
       SentenceDTO(
-          "Be ambitious, grow yourself and the people around you", false),
-      SentenceDTO("Recognize excellence and engagement", false),
+        '125',
+        "Be ambitious, grow yourself and the people around you",
+        false,
+      ),
+      SentenceDTO(
+        '126',
+        "Recognize excellence and engagement",
+        false,
+      ),
     ];
 
     test('should return list of SentenceDTO if there is list in cache',
@@ -59,38 +77,49 @@ void main() {
 
   group('saveSentence', () {
     final tSentence = SentenceDTO(
+      '120',
       "Exceed clients' and colleagues' expectations",
       true,
     );
     final updatedExistingSentences = [
       {
+        "uid": "120",
         "value": "Exceed clients' and colleagues' expectations",
         "isFavourite": true
       },
       {
+        "uid": "121",
         "value":
             "Take ownership and question the status quo in a constructive manner",
         "isFavourite": false
       },
       {
+        "uid": "122",
         "value":
             "Be brave, curious and experiment. Learn from all successes and failures",
         "isFavourite": false
       },
       {
+        "uid": "123",
         "value": "Act in a way that makes all of us proud",
         "isFavourite": false
       },
       {
+        "uid": "124",
         "value":
             "Build an inclusive, transparent and socially responsible culture",
         "isFavourite": false
       },
       {
+        "uid": "125",
         "value": "Be ambitious, grow yourself and the people around you",
         "isFavourite": false
       },
-      {"value": "Recognize excellence and engagement", "isFavourite": false}
+      {
+        "uid": "126",
+        "value": "Recognize excellence and engagement",
+        "isFavourite": false,
+      }
     ];
 
     test(
@@ -131,42 +160,51 @@ void main() {
     });
 
     final tNewSentence = SentenceDTO(
+      '127',
       "Make requirement task as best as you can",
       false,
     );
     final existingSentencesWithNewOne = [
       {
+        "uid": "120",
         "value": "Exceed clients' and colleagues' expectations",
         "isFavourite": false
       },
       {
+        "uid": "121",
         "value":
             "Take ownership and question the status quo in a constructive manner",
         "isFavourite": false
       },
       {
+        "uid": "122",
         "value":
             "Be brave, curious and experiment. Learn from all successes and failures",
         "isFavourite": false
       },
       {
+        "uid": "123",
         "value": "Act in a way that makes all of us proud",
         "isFavourite": false
       },
       {
+        "uid": "124",
         "value":
             "Build an inclusive, transparent and socially responsible culture",
         "isFavourite": false
       },
       {
+        "uid": "125",
         "value": "Be ambitious, grow yourself and the people around you",
         "isFavourite": false
       },
       {
+        "uid": "126",
         "value": "Recognize excellence and engagement",
         "isFavourite": false,
       },
       {
+        "uid": "127",
         "value": "Make requirement task as best as you can",
         "isFavourite": false,
       }

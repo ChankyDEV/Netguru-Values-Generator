@@ -17,10 +17,10 @@ class MockSentenceRepository extends Mock implements SentenceRepository {
     return super.noSuchMethod(
       Invocation.method(#saveSentence, [sentence]),
       returnValueForMissingStub: Future.value(
-        SentenceDTO('', true),
+        SentenceDTO('', '', true),
       ),
       returnValue: Future.value(
-        SentenceDTO('', true),
+        SentenceDTO('', '', true),
       ),
     );
   }

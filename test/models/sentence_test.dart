@@ -8,22 +8,26 @@ import '../utils/fixtures/fixture_reader.dart';
 
 void main() {
   final tFavouriteSentence = SentenceDTO(
+    '123',
     "Exceed clients' and colleagues' expectations",
     true,
   );
   final tNotFavouriteSentence = SentenceDTO(
+    '124',
     "Take ownership and question the status quo in a constructive manner",
     false,
   );
-  const tSentence = Sentence(
+  final tSentence = Sentence.withUid(
+    '123',
     "Exceed clients' and colleagues' expectations",
-    isFavourite: true,
+    true,
   );
 
   group('toJson', () {
     test('should convert favourite sentenceDTO to json format', () {
       final actual = tFavouriteSentence.toJson();
       final expected = {
+        'uid': '123',
         'value': "Exceed clients' and colleagues' expectations",
         'isFavourite': true
       };
@@ -33,6 +37,7 @@ void main() {
     test('should convert not favourite sentenceDTO to json format', () {
       final actual = tNotFavouriteSentence.toJson();
       final expected = {
+        'uid': '124',
         'value':
             "Take ownership and question the status quo in a constructive manner",
         'isFavourite': false
@@ -57,13 +62,6 @@ void main() {
       final sentence = SentenceDTO.fromJson(jsonMap);
 
       expect(sentence, tNotFavouriteSentence);
-    });
-  });
-
-  group('fromDomain', () {
-    test('should convert Sentence to SentenceDTO', () {
-      final dto = SentenceDTO.fromDomain(tSentence);
-      expect(dto, tFavouriteSentence);
     });
   });
 }

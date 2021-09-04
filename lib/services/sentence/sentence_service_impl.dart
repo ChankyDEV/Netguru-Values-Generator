@@ -1,16 +1,20 @@
 import 'package:dartz/dartz.dart';
+import 'package:netguru_values_generator/converters/sentence/sentence_to_dto_converter.dart';
 import 'package:netguru_values_generator/models/exceptions.dart';
 import 'package:netguru_values_generator/models/failure.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
-import 'package:netguru_values_generator/models/sentence_dto.dart';
 import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
 import 'package:netguru_values_generator/services/sentence/sentence_service.dart';
 import 'package:netguru_values_generator/utils/consts.dart';
 
 class SentenceServiceImpl implements SentenceService {
   final SentenceRepository _repository;
+  final SentenceToDtoConverter _converter;
 
-  SentenceServiceImpl(this._repository);
+  SentenceServiceImpl(
+    this._repository,
+    this._converter,
+  );
 
   @override
   Future<Either<Failure, List<Sentence>>> getAllSentences() async {
@@ -31,7 +35,7 @@ class SentenceServiceImpl implements SentenceService {
       Sentence sentenceToSave) async {
     try {
       final sentence = await _repository.saveSentence(
-        SentenceDTO.fromDomain(sentenceToSave),
+        _converter.convert(sentenceToSave),
       );
       return right(sentence);
     } on SentenceException {
