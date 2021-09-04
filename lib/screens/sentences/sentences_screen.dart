@@ -9,14 +9,14 @@ class SentencesScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Generator',
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.headline1,
         ),
         centerTitle: true,
       ),
       body: Center(
         child: Text(
           'Almost before we knew it',
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.headline1,
         ),
       ),
     );

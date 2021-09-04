@@ -11,10 +11,15 @@ class Themes {
           backgroundColor: DarkColor.accent,
         ),
         textTheme: TextTheme(
-          bodyText1: TextStyle(
+          headline1: TextStyle(
             color: DarkColor.text,
             fontWeight: FontWeight.normal,
             fontSize: 28.0,
+          ),
+          bodyText1: TextStyle(
+            color: DarkColor.text,
+            fontWeight: FontWeight.normal,
+            fontSize: 14.0,
           ),
         ),
       );
