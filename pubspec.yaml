@@ -25,10 +25,20 @@ dependencies:
   freezed: ^0.14.2
   uuid: ^3.0.4
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: null
+  flutter_native_splash: ^1.2.1
+
+flutter_native_splash:
+  color: "#2B2B2B"
+  color_dark: "#2B2B2B"
+  image: assets/logo.png
+  image_dark: assets/logo.png
+  android: true
+  ios: true
 
 flutter:
 
