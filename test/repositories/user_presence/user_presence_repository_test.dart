@@ -19,13 +19,13 @@ void main() {
 
   group('isEnteringFirstTime', () {
     test('should return true if user enters first time', () async {
-      when(preferences.getString(any)).thenReturn(null);
+      when(preferences.getBool(any)).thenReturn(null);
       final result = await repository.isEnteringFirstTime();
       expect(result, true);
     });
 
     test('should return false if user not enters first time', () async {
-      when(preferences.getString(any)).thenReturn(null);
+      when(preferences.getBool(any)).thenReturn(null);
       final result = await repository.isEnteringFirstTime();
       expect(result, true);
     });

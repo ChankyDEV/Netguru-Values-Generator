@@ -23,10 +23,16 @@ void main() async {
   );
   final saveSentenceWithUid = SentenceDTO('120', 'value1', true);
 
-  final tSentences = [
+  final tSentenceDtos = [
     SentenceDTO('120', 'value1', true),
     SentenceDTO('121', 'value2', true),
     SentenceDTO('122', 'value3', true),
+  ];
+
+  final tSentences = [
+    Sentence.withUid('120', 'value1', true),
+    Sentence.withUid('121', 'value2', true),
+    Sentence.withUid('122', 'value3', true),
   ];
 
   setUpAll(() {
@@ -38,7 +44,8 @@ void main() async {
   group('getAllSentences', () {
     test('should return right with list of sentences if everything went well',
         () async {
-      when(repository.getAllSentences()).thenAnswer((_) async => tSentences);
+      when(repository.getAllSentences()).thenAnswer((_) async => tSentenceDtos);
+      when(converter.convertAllFromDtos(any)).thenReturn(tSentences);
       final sentences = await service.getAllSentences();
       verify(repository.getAllSentences());
       expect(
@@ -66,11 +73,13 @@ void main() async {
 
   group('saveSentence', () {
     test('should return right(Sentence) if saved sentence properly', () async {
-      when(repository.saveSentence(any)).thenAnswer((_) async => tSentences[0]);
-      when(converter.convert(any)).thenReturn(saveSentenceWithUid);
+      when(repository.saveSentence(any))
+          .thenAnswer((_) async => tSentenceDtos[0]);
+      when(converter.convertToDto(any)).thenReturn(saveSentenceWithUid);
+      when(converter.convertFromDto(any)).thenReturn(tSentences[0]);
       final sentence = await service.saveSentence(sentenceToSave);
 
-      verify(converter.convert(sentenceToSave));
+      verify(converter.convertToDto(sentenceToSave));
       expect(
         sentence,
         right(tSentences[0]),
@@ -80,10 +89,10 @@ void main() async {
     test('should return left(Failure) if saved sentence went unsuccessfully',
         () async {
       when(repository.saveSentence(any)).thenThrow(SentenceException());
-      when(converter.convert(any)).thenReturn(saveSentenceWithUid);
+      when(converter.convertToDto(any)).thenReturn(saveSentenceWithUid);
       final sentence = await service.saveSentence(sentenceToSave);
 
-      verify(converter.convert(sentenceToSave));
+      verify(converter.convertToDto(sentenceToSave));
       expect(
         sentence,
         left(
@@ -99,20 +108,20 @@ void main() async {
     final tListSentences = <Sentence>[Sentence('value', false)];
     final tListDtos = <SentenceDTO>[SentenceDTO('123', 'value', false)];
     test('should return unit if successfully replaced list in cache', () async {
-      when(converter.convertAll(any)).thenReturn(tListDtos);
+      when(converter.convertAllToDtos(any)).thenReturn(tListDtos);
       when(repository.replaceAll(any)).thenAnswer((_) async => null);
       final result = await service.replaceAll(tListSentences);
-      verify(converter.convertAll(tListSentences));
+      verify(converter.convertAllToDtos(tListSentences));
       verify(repository.replaceAll(tListDtos));
       expect(result, right(unit));
     });
 
     test('should return failure if unsuccessfully replaced list in cache',
         () async {
-      when(converter.convertAll(any)).thenReturn(tListDtos);
+      when(converter.convertAllToDtos(any)).thenReturn(tListDtos);
       when(repository.replaceAll(any)).thenThrow(SentenceException());
       final result = await service.replaceAll(tListSentences);
-      verify(converter.convertAll(tListSentences));
+      verify(converter.convertAllToDtos(tListSentences));
       verify(repository.replaceAll(tListDtos));
       expect(
         result,
@@ -128,16 +137,22 @@ void main() async {
     SentenceDTO('124', 'value2', true),
   ];
 
+  final tFavourites = [
+    Sentence.withUid('123', 'value1', true),
+    Sentence.withUid('124', 'value2', true),
+  ];
+
   group('getFavourites', () {
     test('should return right list of sentences if successfully can get them',
         () async {
       when(repository.getFavouriteSentences())
           .thenAnswer((_) async => tFavouritesDtos);
+      when(converter.convertAllFromDtos(any)).thenReturn(tFavourites);
       final result = await service.getFavouriteSentences();
       verify(repository.getFavouriteSentences());
       expect(
         result,
-        right(tFavouritesDtos),
+        right(tFavourites),
       );
     });
 

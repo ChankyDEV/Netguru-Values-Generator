@@ -11,7 +11,7 @@ import 'package:netguru_values_generator/utils/consts.dart';
 class UserPresenceServiceImpl implements UserPresenceService {
   final UserPresenceRepository _userPresenceRepository;
   final SentenceRepository _sentenceRepository;
-  final SentenceToDtoConverter _converter;
+  final SentenceConverter _converter;
   final List<Sentence> _startUpSentences;
 
   UserPresenceServiceImpl(
@@ -27,7 +27,7 @@ class UserPresenceServiceImpl implements UserPresenceService {
       final isFirstTime = await _userPresenceRepository.isEnteringFirstTime();
       if (isFirstTime) {
         _sentenceRepository.replaceAll(
-          _converter.convertAll(
+          _converter.convertAllToDtos(
             _startUpSentences,
           ),
         );

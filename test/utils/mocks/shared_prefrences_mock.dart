@@ -28,4 +28,13 @@ class MockSharedPreferences extends Mock implements SharedPreferences {
       returnValue: Future.value(true),
     );
   }
+
+  @override
+  bool? getBool(String? key) {
+    return super.noSuchMethod(
+      Invocation.method(#getBool, [key]),
+      returnValueForMissingStub: true,
+      returnValue: true,
+    );
+  }
 }

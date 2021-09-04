@@ -3,10 +3,11 @@ import 'package:netguru_values_generator/screens/consts/colors.dart';
 
 class Themes {
   static ThemeData get dark => ThemeData(
-        primaryColor: Colors.red,
+        accentColor: DarkColor.accent,
+        primaryColor: DarkColor.text,
         fontFamily: "Josefin-Sans",
         scaffoldBackgroundColor: DarkColor.background,
-        iconTheme: IconThemeData(color: DarkColor.text),
+        iconTheme: IconThemeData(color: DarkColor.accent),
         appBarTheme: AppBarTheme(
           backgroundColor: DarkColor.accent,
         ),
@@ -14,19 +15,18 @@ class Themes {
           headline1: TextStyle(
             color: DarkColor.text,
             fontWeight: FontWeight.normal,
-            fontSize: 28.0,
           ),
           bodyText1: TextStyle(
             color: DarkColor.text,
             fontWeight: FontWeight.normal,
-            fontSize: 14.0,
           ),
         ),
       );
 
   static ThemeData get light => ThemeData(
-        primarySwatch: Colors.blue,
         fontFamily: "Josefin-Sans",
+        accentColor: LightColor.accent,
+        primaryColor: LightColor.text,
         appBarTheme: AppBarTheme(
           backgroundColor: LightColor.accent,
         ),
@@ -36,7 +36,6 @@ class Themes {
           bodyText1: TextStyle(
             color: LightColor.text,
             fontWeight: FontWeight.normal,
-            fontSize: 28.0,
           ),
         ),
       );

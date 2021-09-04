@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:netguru_values_generator/blocs/initialization/initialization_bloc.dart';
+import 'package:netguru_values_generator/blocs/sentence/sentence_bloc.dart';
 import 'package:netguru_values_generator/converters/sentence/sentence_to_dto_converter.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
@@ -38,7 +39,7 @@ class Config {
     final sentenceRepository = getIt.get<SentenceRepository>();
     final userPresenceRepository = getIt.get<UserPresenceRepository>();
     final generator = Uuid();
-    final converter = SentenceToDtoConverter(generator);
+    final converter = SentenceConverter(generator);
     getIt
       ..registerSingleton<RoutingService>(
         RoutingService(),
@@ -64,6 +65,11 @@ class Config {
       ..registerSingleton<InitializationBloc>(
         InitializationBloc(
           getIt.get<UserPresenceService>(),
+        ),
+      )
+      ..registerSingleton<SentenceBloc>(
+        SentenceBloc(
+          getIt.get<SentenceService>(),
         ),
       );
   }

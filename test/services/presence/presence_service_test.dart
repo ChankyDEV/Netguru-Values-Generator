@@ -100,7 +100,7 @@ void main() {
 
       final result = await service.configureApp();
       verify(userPresenceRepository.isEnteringFirstTime());
-      verifyNever(converter.convertAll(tBasicSentences));
+      verifyNever(converter.convertAllToDtos(tBasicSentences));
       verifyNever(sentenceRepository.replaceAll(tBasicSentencesDtos));
       verifyNever(userPresenceRepository.saveUserPresence());
       expect(result, right(unit));
@@ -111,13 +111,13 @@ void main() {
       when(userPresenceRepository.isEnteringFirstTime()).thenAnswer(
         (_) async => true,
       );
-      when(converter.convertAll(any)).thenReturn(tBasicSentencesDtos);
+      when(converter.convertAllToDtos(any)).thenReturn(tBasicSentencesDtos);
       when(sentenceRepository.replaceAll(any)).thenAnswer((_) async => null);
       when(userPresenceRepository.saveUserPresence())
           .thenAnswer((_) async => null);
       final result = await service.configureApp();
       verify(userPresenceRepository.isEnteringFirstTime());
-      verify(converter.convertAll(tBasicSentences));
+      verify(converter.convertAllToDtos(tBasicSentences));
       verify(sentenceRepository.replaceAll(tBasicSentencesDtos));
       verify(userPresenceRepository.saveUserPresence());
       expect(result, right(unit));
@@ -133,7 +133,7 @@ void main() {
       );
       final result = await service.configureApp();
       verify(userPresenceRepository.isEnteringFirstTime());
-      verifyNever(converter.convertAll(tBasicSentences));
+      verifyNever(converter.convertAllToDtos(tBasicSentences));
       verifyNever(sentenceRepository.replaceAll(tBasicSentencesDtos));
       verifyNever(userPresenceRepository.saveUserPresence());
       expect(
@@ -157,7 +157,7 @@ void main() {
       );
       final result = await service.configureApp();
       verify(userPresenceRepository.isEnteringFirstTime());
-      verify(converter.convertAll(tBasicSentences));
+      verify(converter.convertAllToDtos(tBasicSentences));
       verify(sentenceRepository.replaceAll(tBasicSentencesDtos));
       verifyNever(userPresenceRepository.saveUserPresence());
       expect(
@@ -173,7 +173,7 @@ void main() {
     test('should return failure if cant save user presence', () async {
       when(userPresenceRepository.isEnteringFirstTime())
           .thenAnswer((_) async => true);
-      when(converter.convertAll(any)).thenReturn(tBasicSentencesDtos);
+      when(converter.convertAllToDtos(any)).thenReturn(tBasicSentencesDtos);
       when(sentenceRepository.replaceAll(any)).thenAnswer((_) async => null);
       when(userPresenceRepository.saveUserPresence())
           .thenThrow(UserPresenceException(
@@ -181,7 +181,7 @@ void main() {
       ));
       final result = await service.configureApp();
       verify(userPresenceRepository.isEnteringFirstTime());
-      verify(converter.convertAll(tBasicSentences));
+      verify(converter.convertAllToDtos(tBasicSentences));
       verify(sentenceRepository.replaceAll(tBasicSentencesDtos));
       verify(userPresenceRepository.saveUserPresence());
       expect(

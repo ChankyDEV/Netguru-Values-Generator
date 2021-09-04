@@ -1,6 +1,6 @@
-import 'package:netguru_values_generator/models/sentence.dart';
+import 'package:equatable/equatable.dart';
 
-class SentenceDTO extends Sentence {
+class SentenceDTO extends Equatable {
   final String uid;
   final String value;
   final bool isFavourite;
@@ -9,11 +9,7 @@ class SentenceDTO extends Sentence {
     this.uid,
     this.value,
     this.isFavourite,
-  ) : super.withUid(
-          uid,
-          value,
-          isFavourite,
-        );
+  );
 
   factory SentenceDTO.fromJson(Map<String, dynamic> jsonMap) {
     return SentenceDTO(
@@ -40,4 +36,11 @@ class SentenceDTO extends Sentence {
       'isFavourite': isFavourite,
     };
   }
+
+  @override
+  List<Object?> get props => [
+        this.uid,
+        this.value,
+        this.isFavourite,
+      ];
 }

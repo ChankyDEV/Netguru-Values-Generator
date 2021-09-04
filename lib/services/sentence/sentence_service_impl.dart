@@ -9,7 +9,7 @@ import 'package:netguru_values_generator/utils/consts.dart';
 
 class SentenceServiceImpl implements SentenceService {
   final SentenceRepository _repository;
-  final SentenceToDtoConverter _converter;
+  final SentenceConverter _converter;
 
   SentenceServiceImpl(
     this._repository,
@@ -20,7 +20,9 @@ class SentenceServiceImpl implements SentenceService {
   Future<Either<Failure, List<Sentence>>> getAllSentences() async {
     try {
       final sentences = await _repository.getAllSentences();
-      return right(sentences);
+      return right(
+        _converter.convertAllFromDtos(sentences),
+      );
     } on SentenceException {
       return left(
         const Failure(
@@ -32,12 +34,12 @@ class SentenceServiceImpl implements SentenceService {
 
   @override
   Future<Either<Failure, Sentence>> saveSentence(
-      Sentence sentenceToSave) async {
+    Sentence sentenceToSave,
+  ) async {
     try {
-      final sentence = await _repository.saveSentence(
-        _converter.convert(sentenceToSave),
-      );
-      return right(sentence);
+      final dto = _converter.convertToDto(sentenceToSave);
+      final sentence = await _repository.saveSentence(dto);
+      return right(_converter.convertFromDto(sentence));
     } on SentenceException {
       return left(
         const Failure(
@@ -51,7 +53,7 @@ class SentenceServiceImpl implements SentenceService {
   Future<Either<Failure, Unit>> replaceAll(List<Sentence> sentences) async {
     try {
       await _repository.replaceAll(
-        _converter.convertAll(sentences),
+        _converter.convertAllToDtos(sentences),
       );
       return right(unit);
     } on SentenceException {
@@ -67,7 +69,9 @@ class SentenceServiceImpl implements SentenceService {
   Future<Either<Failure, List<Sentence>>> getFavouriteSentences() async {
     try {
       final favourites = await _repository.getFavouriteSentences();
-      return right(favourites);
+      return right(
+        _converter.convertAllFromDtos(favourites),
+      );
     } on SentenceException catch (e) {
       return left(
         Failure(e.message),
