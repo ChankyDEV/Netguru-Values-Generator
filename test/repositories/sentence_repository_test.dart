@@ -70,7 +70,11 @@ void main() {
       final call = repository.getAllSentences;
       expect(
         () => call(),
-        throwsA(TypeMatcher<SentenceException>()),
+        throwsA(
+          SentenceException(
+            message: ErrorMessages.sentences.noSentences,
+          ),
+        ),
       );
     });
   });
@@ -171,7 +175,11 @@ void main() {
 
       expect(
         () => call(tSentence),
-        throwsA(TypeMatcher<SentenceException>()),
+        throwsA(
+          SentenceException(
+            message: ErrorMessages.sentences.cantSaveSentence,
+          ),
+        ),
       );
     });
 
@@ -261,7 +269,11 @@ void main() {
 
       expect(
         () => call(tNewSentence),
-        throwsA(TypeMatcher<SentenceException>()),
+        throwsA(
+          SentenceException(
+            message: ErrorMessages.sentences.cantSaveSentence,
+          ),
+        ),
       );
     });
   });
@@ -296,7 +308,9 @@ void main() {
       expect(
         () => call(sentences),
         throwsA(
-          TypeMatcher<SentenceException>(),
+          SentenceException(
+            message: ErrorMessages.sentences.cantReplaceAllSentences,
+          ),
         ),
       );
     });
@@ -399,8 +413,15 @@ void main() {
       expect(
           () => call(),
           throwsA(
-            SentenceException(),
+            SentenceException(
+              message: ErrorMessages.sentences.noSentences,
+            ),
           ));
     });
+  });
+
+  group('findByUid', () {
+    test(
+        'should return SentenceDTO if there is one with particular uid', () {});
   });
 }

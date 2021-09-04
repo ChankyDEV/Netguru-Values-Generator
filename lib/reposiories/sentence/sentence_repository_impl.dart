@@ -11,6 +11,7 @@ const SENTENCES = 'sentences';
 
 class SentenceRepositoryImpl implements SentenceRepository {
   final SharedPreferences _preferences;
+  List<SentenceDTO> _sentences = <SentenceDTO>[];
 
   SentenceRepositoryImpl(this._preferences);
 
@@ -20,16 +21,18 @@ class SentenceRepositoryImpl implements SentenceRepository {
     if (sentences.isNotEmpty) {
       return Future.value(sentences);
     } else {
-      throw SentenceException();
+      throw SentenceException(
+        message: ErrorMessages.sentences.noSentences,
+      );
     }
   }
 
   @override
   Future<List<SentenceDTO>> getFavouriteSentences() {
-    final sentences = _getAllSentences();
-    if (sentences.isNotEmpty) {
+    _sentences = _getAllSentences();
+    if (_sentences.isNotEmpty) {
       final favourites =
-          sentences.where((sentence) => sentence.isFavourite).toList();
+          _sentences.where((sentence) => sentence.isFavourite).toList();
       if (favourites.isNotEmpty) {
         return Future.value(favourites);
       } else {
@@ -38,85 +41,24 @@ class SentenceRepositoryImpl implements SentenceRepository {
         );
       }
     }
-    throw SentenceException();
+    throw SentenceException(
+      message: ErrorMessages.sentences.noSentences,
+    );
   }
 
   List<SentenceDTO> _getAllSentences() {
     final sentencesString = _preferences.getString(SENTENCES);
     if (sentencesString != null) {
-      final sentences = _getFavouritesFromString<SentenceDTO>(
+      _sentences = _getSentencesFromString<SentenceDTO>(
         sentencesString,
         onConversion: (jsonMap) => SentenceDTO.fromJson(jsonMap),
       );
-      return sentences;
+      return _sentences;
     }
     return <SentenceDTO>[];
   }
 
-  Future<SentenceDTO> _updateAlreadyExistingSentenceAtIndex(
-    SentenceDTO sentence,
-    List<SentenceDTO> sentences,
-    int index,
-  ) async {
-    sentences[index] = sentence;
-    final isSentenceSaved = await _preferences.setString(
-      SENTENCES,
-      json.encode(sentences),
-    );
-    if (isSentenceSaved) {
-      return Future.value(sentence);
-    } else {
-      throw SentenceException();
-    }
-  }
-
-  Future<SentenceDTO> _addNewSentence(SentenceDTO sentence,
-      [List<SentenceDTO>? sentences]) async {
-    sentences = sentences ?? [];
-    sentences.add(sentence);
-    final isSentenceSaved = await _preferences.setString(
-      SENTENCES,
-      json.encode(sentences),
-    );
-    if (isSentenceSaved) {
-      return Future.value(sentence);
-    } else {
-      throw SentenceException();
-    }
-  }
-
-  @override
-  Future<SentenceDTO> saveSentence(SentenceDTO sentence) async {
-    final isValid = validateSentence(sentence);
-    if (isValid) {
-      final sentencesString = _preferences.getString(SENTENCES);
-      if (sentencesString != null) {
-        final sentences = _getFavouritesFromString<SentenceDTO>(
-          sentencesString,
-          onConversion: (jsonMap) => SentenceDTO.fromJson(jsonMap),
-        );
-        final index = sentences.indexWhere(
-          (element) => element.value == sentence.value,
-        );
-        if (index != -1) {
-          return await _updateAlreadyExistingSentenceAtIndex(
-            sentence,
-            sentences,
-            index,
-          );
-        } else {
-          return await _addNewSentence(sentence, sentences);
-        }
-      }
-      return await _addNewSentence(sentence);
-    } else {
-      throw SentenceException(
-        message: ErrorMessages.sentences.sentenceValueIsNotValid,
-      );
-    }
-  }
-
-  List<T> _getFavouritesFromString<T>(
+  List<T> _getSentencesFromString<T>(
     String dataString, {
     required T Function(Map<String, dynamic>) onConversion,
   }) {
@@ -129,6 +71,76 @@ class SentenceRepositoryImpl implements SentenceRepository {
   }
 
   @override
+  Future<SentenceDTO> saveSentence(SentenceDTO sentence) async {
+    final isValid = validateSentence(sentence);
+    if (isValid) {
+      final sentences = _getAllSentences();
+      if (sentences.isNotEmpty) {
+        final existingSentence = findByUid(sentence.uid);
+        if (existingSentence != null) {
+          return await _updateSentence(
+            sentence,
+            uid: existingSentence.uid,
+          );
+        } else {
+          return await _addNewSentence(sentence);
+        }
+      } else {
+        throw SentenceException(message: ErrorMessages.sentences.noSentences);
+      }
+    } else {
+      throw SentenceException(
+        message: ErrorMessages.sentences.sentenceValueIsNotValid,
+      );
+    }
+  }
+
+  Future<SentenceDTO> _updateSentence(
+    SentenceDTO sentence, {
+    required String uid,
+  }) async {
+    final index = _sentences.indexWhere((s) => s.uid == uid);
+    _sentences[index] = sentence;
+    final isSentenceSaved = await _preferences.setString(
+      SENTENCES,
+      json.encode(_sentences),
+    );
+    if (isSentenceSaved) {
+      return Future.value(sentence);
+    } else {
+      throw SentenceException(
+        message: ErrorMessages.sentences.cantSaveSentence,
+      );
+    }
+  }
+
+  Future<SentenceDTO> _addNewSentence(SentenceDTO sentence) async {
+    _sentences.add(sentence);
+    final isSentenceSaved = await _preferences.setString(
+      SENTENCES,
+      json.encode(_sentences),
+    );
+    if (isSentenceSaved) {
+      return Future.value(sentence);
+    } else {
+      throw SentenceException(
+        message: ErrorMessages.sentences.cantSaveSentence,
+      );
+    }
+  }
+
+  @visibleForTesting
+  SentenceDTO? findByUid(String uid) {
+    try {
+      final sentence =
+          _sentences.where((sentence) => sentence.uid == uid).first;
+      return sentence;
+    } on StateError {
+      return null;
+    }
+  }
+
+  @override
   Future<void> replaceAll(List<SentenceDTO> sentences) async {
     final areValid = areSentencesValuesValid(sentences);
     if (areValid) {
@@ -137,7 +149,9 @@ class SentenceRepositoryImpl implements SentenceRepository {
         json.encode(sentences),
       );
       if (!areSentencesSaved) {
-        throw SentenceException();
+        throw SentenceException(
+          message: ErrorMessages.sentences.cantReplaceAllSentences,
+        );
       }
     } else {
       throw SentenceException(
