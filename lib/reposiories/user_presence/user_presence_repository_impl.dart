@@ -12,7 +12,7 @@ class UserPresenceRepositoryImpl implements UserPresenceRepository {
   @override
   Future<bool> isEnteringFirstTime() async {
     final userPresence =
-        _preferences.getString(SharedPreferencesKeys.userPresence);
+        _preferences.getBool(SharedPreferencesKeys.userPresence);
     final isFirstTime = userPresence == null;
     return Future.value(isFirstTime);
   }

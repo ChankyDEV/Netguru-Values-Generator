@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:netguru_values_generator/blocs/initialization/initialization_bloc.dart';
 import 'package:netguru_values_generator/converters/sentence/sentence_to_dto_converter.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
@@ -19,6 +20,7 @@ class Config {
   Future<void> configureDependencies() async {
     await _registerDataSources();
     await _registerServices();
+    await _registerBlocs();
   }
 
   Future<void> _registerDataSources() async {
@@ -53,6 +55,15 @@ class Config {
         SentenceServiceImpl(
           sentenceRepository,
           converter,
+        ),
+      );
+  }
+
+  Future<void> _registerBlocs() async {
+    getIt
+      ..registerSingleton<InitializationBloc>(
+        InitializationBloc(
+          getIt.get<UserPresenceService>(),
         ),
       );
   }
