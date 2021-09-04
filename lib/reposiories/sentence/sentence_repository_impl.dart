@@ -1,13 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:netguru_values_generator/keys.dart';
 import 'package:netguru_values_generator/models/exceptions.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
 import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
 import 'package:netguru_values_generator/utils/consts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-const SENTENCES = 'sentences';
 
 class SentenceRepositoryImpl implements SentenceRepository {
   final SharedPreferences _preferences;
@@ -22,7 +21,7 @@ class SentenceRepositoryImpl implements SentenceRepository {
       return Future.value(sentences);
     } else {
       throw SentenceException(
-        message: ErrorMessages.sentences.noSentences,
+        message: SentenceErrorMessages.noSentences,
       );
     }
   }
@@ -37,17 +36,18 @@ class SentenceRepositoryImpl implements SentenceRepository {
         return Future.value(favourites);
       } else {
         throw SentenceException(
-          message: ErrorMessages.sentences.noFavouriteSentences,
+          message: SentenceErrorMessages.noFavouriteSentences,
         );
       }
     }
     throw SentenceException(
-      message: ErrorMessages.sentences.noSentences,
+      message: SentenceErrorMessages.noSentences,
     );
   }
 
   List<SentenceDTO> _getAllSentences() {
-    final sentencesString = _preferences.getString(SENTENCES);
+    final sentencesString =
+        _preferences.getString(SharedPreferencesKeys.sentences);
     if (sentencesString != null) {
       _sentences = _getSentencesFromString<SentenceDTO>(
         sentencesString,
@@ -86,11 +86,11 @@ class SentenceRepositoryImpl implements SentenceRepository {
           return await _addNewSentence(sentence);
         }
       } else {
-        throw SentenceException(message: ErrorMessages.sentences.noSentences);
+        throw SentenceException(message: SentenceErrorMessages.noSentences);
       }
     } else {
       throw SentenceException(
-        message: ErrorMessages.sentences.sentenceValueIsNotValid,
+        message: SentenceErrorMessages.sentenceValueIsNotValid,
       );
     }
   }
@@ -102,14 +102,14 @@ class SentenceRepositoryImpl implements SentenceRepository {
     final index = _sentences.indexWhere((s) => s.uid == uid);
     _sentences[index] = sentence;
     final isSentenceSaved = await _preferences.setString(
-      SENTENCES,
+      SharedPreferencesKeys.sentences,
       json.encode(_sentences),
     );
     if (isSentenceSaved) {
       return Future.value(sentence);
     } else {
       throw SentenceException(
-        message: ErrorMessages.sentences.cantSaveSentence,
+        message: SentenceErrorMessages.cantSaveSentence,
       );
     }
   }
@@ -117,14 +117,14 @@ class SentenceRepositoryImpl implements SentenceRepository {
   Future<SentenceDTO> _addNewSentence(SentenceDTO sentence) async {
     _sentences.add(sentence);
     final isSentenceSaved = await _preferences.setString(
-      SENTENCES,
+      SharedPreferencesKeys.sentences,
       json.encode(_sentences),
     );
     if (isSentenceSaved) {
       return Future.value(sentence);
     } else {
       throw SentenceException(
-        message: ErrorMessages.sentences.cantSaveSentence,
+        message: SentenceErrorMessages.cantSaveSentence,
       );
     }
   }
@@ -145,17 +145,17 @@ class SentenceRepositoryImpl implements SentenceRepository {
     final areValid = areSentencesValuesValid(sentences);
     if (areValid) {
       final areSentencesSaved = await _preferences.setString(
-        SENTENCES,
+        SharedPreferencesKeys.sentences,
         json.encode(sentences),
       );
       if (!areSentencesSaved) {
         throw SentenceException(
-          message: ErrorMessages.sentences.cantReplaceAllSentences,
+          message: SentenceErrorMessages.cantReplaceAllSentences,
         );
       }
     } else {
       throw SentenceException(
-        message: ErrorMessages.sentences.sentenceValueIsNotValid,
+        message: SentenceErrorMessages.sentenceValueIsNotValid,
       );
     }
   }

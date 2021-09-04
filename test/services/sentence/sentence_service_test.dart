@@ -9,8 +9,8 @@ import 'package:netguru_values_generator/services/sentence/sentence_service.dart
 import 'package:netguru_values_generator/services/sentence/sentence_service_impl.dart';
 import 'package:netguru_values_generator/utils/consts.dart';
 
-import '../utils/mocks/sentence_repository_mock.dart';
-import '../utils/mocks/sentence_to_dto_converter_mock.dart';
+import '../../utils/mocks/sentence_repository_mock.dart';
+import '../../utils/mocks/sentence_to_dto_converter_mock.dart';
 
 void main() async {
   late SentenceService service;
@@ -55,9 +55,11 @@ void main() async {
       verify(repository.getAllSentences());
       expect(
         sentences,
-        left(Failure(
-          ErrorMessages.sentences.cantGetSentences,
-        )),
+        left(
+          const Failure(
+            SentenceErrorMessages.cantGetSentences,
+          ),
+        ),
       );
     });
   });
@@ -85,8 +87,8 @@ void main() async {
       expect(
         sentence,
         left(
-          Failure(
-            ErrorMessages.sentences.cantSaveSentence,
+          const Failure(
+            SentenceErrorMessages.cantSaveSentence,
           ),
         ),
       );
@@ -115,7 +117,7 @@ void main() async {
       expect(
         result,
         left(
-          Failure(ErrorMessages.sentences.cantReplaceAllSentences),
+          const Failure(SentenceErrorMessages.cantReplaceAllSentences),
         ),
       );
     });
@@ -143,7 +145,7 @@ void main() async {
         () async {
       when(repository.getFavouriteSentences()).thenThrow(
         SentenceException(
-          message: ErrorMessages.sentences.noFavouriteSentences,
+          message: SentenceErrorMessages.noFavouriteSentences,
         ),
       );
       final result = await service.getFavouriteSentences();
@@ -151,7 +153,7 @@ void main() async {
       expect(
         result,
         left(
-          Failure(ErrorMessages.sentences.noFavouriteSentences),
+          const Failure(SentenceErrorMessages.noFavouriteSentences),
         ),
       );
     });
@@ -161,7 +163,7 @@ void main() async {
         () async {
       when(repository.getFavouriteSentences()).thenThrow(
         SentenceException(
-          message: ErrorMessages.sentences.cantGetSentences,
+          message: SentenceErrorMessages.cantGetSentences,
         ),
       );
       final result = await service.getFavouriteSentences();
@@ -169,7 +171,7 @@ void main() async {
       expect(
         result,
         left(
-          Failure(ErrorMessages.sentences.cantGetSentences),
+          const Failure(SentenceErrorMessages.cantGetSentences),
         ),
       );
     });

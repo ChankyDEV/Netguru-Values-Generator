@@ -1,12 +1,17 @@
-class SentenceErrorMessages {
-  final cantGetSentences = 'Could not get all sentences';
-  final cantSaveSentence = 'Could not save a sentence';
-  final cantReplaceAllSentences = 'Could not save all sentences';
-  final noFavouriteSentences = 'There is no favourite sentences in database';
-  final sentenceValueIsNotValid = 'Sentence value is not valid';
-  final noSentences = 'There is no sentences in database';
+mixin SentenceErrorMessages {
+  static const cantGetSentences = 'Could not get all sentences';
+  static const cantSaveSentence = 'Could not save a sentence';
+  static const cantReplaceAllSentences = 'Could not save all sentences';
+  static const noFavouriteSentences =
+      'There is no favourite sentences in database';
+  static const sentenceValueIsNotValid = 'Sentence value is not valid';
+  static const noSentences = 'There is no sentences in database';
 }
 
-mixin ErrorMessages {
-  static final sentences = SentenceErrorMessages();
+class UserPresenceErrorMessages {
+  static const cantGetInfoAboutEntering =
+      'Could no get information about first time entering by user';
+  static const cantAddStartingValuesIntoDatabase =
+      'Could no get information about first time entering by user';
+  static const cantSaveUserPresence = 'Could not save user presence';
 }

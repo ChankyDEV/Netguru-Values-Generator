@@ -23,8 +23,8 @@ class SentenceServiceImpl implements SentenceService {
       return right(sentences);
     } on SentenceException {
       return left(
-        Failure(
-          ErrorMessages.sentences.cantGetSentences,
+        const Failure(
+          SentenceErrorMessages.cantGetSentences,
         ),
       );
     }
@@ -40,8 +40,8 @@ class SentenceServiceImpl implements SentenceService {
       return right(sentence);
     } on SentenceException {
       return left(
-        Failure(
-          ErrorMessages.sentences.cantSaveSentence,
+        const Failure(
+          SentenceErrorMessages.cantSaveSentence,
         ),
       );
     }
@@ -55,9 +55,11 @@ class SentenceServiceImpl implements SentenceService {
       );
       return right(unit);
     } on SentenceException {
-      return left(Failure(
-        ErrorMessages.sentences.cantReplaceAllSentences,
-      ));
+      return left(
+        const Failure(
+          SentenceErrorMessages.cantReplaceAllSentences,
+        ),
+      );
     }
   }
 

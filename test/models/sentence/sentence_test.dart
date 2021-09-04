@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
 
-import '../utils/fixtures/fixture_reader.dart';
+import '../../utils/fixtures/fixture_reader.dart';
 
 void main() {
   final tFavouriteSentence = SentenceDTO(

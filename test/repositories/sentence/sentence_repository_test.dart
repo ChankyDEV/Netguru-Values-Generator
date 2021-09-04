@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:netguru_values_generator/keys.dart';
 import 'package:netguru_values_generator/models/exceptions.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
 import 'package:netguru_values_generator/reposiories/sentence/sentence_repository_impl.dart';
 import 'package:netguru_values_generator/utils/consts.dart';
 
-import '../utils/fixtures/fixture_reader.dart';
-import '../utils/mocks/shared_prefrences_mock.dart';
+import '../../utils/fixtures/fixture_reader.dart';
+import '../../utils/mocks/shared_prefrences_mock.dart';
 
 void main() {
   late SentenceRepositoryImpl repository;
@@ -61,7 +62,7 @@ void main() {
         fixture('sentences.json'),
       );
       final sentences = await repository.getAllSentences();
-      verify(mockSharedPreferences.getString(SENTENCES));
+      verify(mockSharedPreferences.getString(SharedPreferencesKeys.sentences));
       expect(sentences, tSentences);
     });
 
@@ -72,7 +73,7 @@ void main() {
         () => call(),
         throwsA(
           SentenceException(
-            message: ErrorMessages.sentences.noSentences,
+            message: SentenceErrorMessages.noSentences,
           ),
         ),
       );
@@ -136,7 +137,7 @@ void main() {
         () => call(tNotValidSentence),
         throwsA(
           SentenceException(
-            message: ErrorMessages.sentences.sentenceValueIsNotValid,
+            message: SentenceErrorMessages.sentenceValueIsNotValid,
           ),
         ),
       );
@@ -153,10 +154,10 @@ void main() {
       final sentence = await repository.saveSentence(tSentence);
       final expectedJsonString = json.encode(updatedExistingSentences);
       verify(mockSharedPreferences.setString(
-        SENTENCES,
+        SharedPreferencesKeys.sentences,
         expectedJsonString,
       ));
-      verify(mockSharedPreferences.getString(SENTENCES));
+      verify(mockSharedPreferences.getString(SharedPreferencesKeys.sentences));
       expect(
         sentence,
         SentenceDTO.fromJson(updatedExistingSentences[0]),
@@ -177,7 +178,7 @@ void main() {
         () => call(tSentence),
         throwsA(
           SentenceException(
-            message: ErrorMessages.sentences.cantSaveSentence,
+            message: SentenceErrorMessages.cantSaveSentence,
           ),
         ),
       );
@@ -244,9 +245,9 @@ void main() {
           .thenAnswer((_) async => true);
       final sentence = await repository.saveSentence(tNewSentence);
       final expectedJsonString = json.encode(existingSentencesWithNewOne);
-      verify(mockSharedPreferences.getString(SENTENCES));
+      verify(mockSharedPreferences.getString(SharedPreferencesKeys.sentences));
       verify(mockSharedPreferences.setString(
-        SENTENCES,
+        SharedPreferencesKeys.sentences,
         expectedJsonString,
       ));
       expect(
@@ -271,7 +272,7 @@ void main() {
         () => call(tNewSentence),
         throwsA(
           SentenceException(
-            message: ErrorMessages.sentences.cantSaveSentence,
+            message: SentenceErrorMessages.cantSaveSentence,
           ),
         ),
       );
@@ -294,7 +295,7 @@ void main() {
       await repository.replaceAll(sentences);
       verify(
         mockSharedPreferences.setString(
-          SENTENCES,
+          SharedPreferencesKeys.sentences,
           json.encode(sentencesMap),
         ),
       );
@@ -309,7 +310,7 @@ void main() {
         () => call(sentences),
         throwsA(
           SentenceException(
-            message: ErrorMessages.sentences.cantReplaceAllSentences,
+            message: SentenceErrorMessages.cantReplaceAllSentences,
           ),
         ),
       );
@@ -389,7 +390,7 @@ void main() {
         fixture('sentences_with_favourites.json'),
       );
       final favourites = await repository.getFavouriteSentences();
-      verify(mockSharedPreferences.getString(SENTENCES));
+      verify(mockSharedPreferences.getString(SharedPreferencesKeys.sentences));
       expect(favourites, tFavouritesSentences);
     });
 
@@ -402,7 +403,7 @@ void main() {
           () => call(),
           throwsA(
             SentenceException(
-              message: ErrorMessages.sentences.noFavouriteSentences,
+              message: SentenceErrorMessages.noFavouriteSentences,
             ),
           ));
     });
@@ -414,7 +415,7 @@ void main() {
           () => call(),
           throwsA(
             SentenceException(
-              message: ErrorMessages.sentences.noSentences,
+              message: SentenceErrorMessages.noSentences,
             ),
           ));
     });
