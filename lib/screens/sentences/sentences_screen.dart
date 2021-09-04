@@ -5,6 +5,20 @@ class SentencesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Generator',
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Text(
+          'Hello',
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+      ),
+    );
   }
 }
