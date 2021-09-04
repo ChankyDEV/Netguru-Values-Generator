@@ -15,7 +15,7 @@ class SentencesScreen extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'Hello',
+          'Almost before we knew it',
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),

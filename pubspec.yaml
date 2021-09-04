@@ -32,5 +32,12 @@ dev_dependencies:
 
 flutter:
 
+  fonts:
+    - family: Josefin-Sans
+      fonts:
+        - asset: assets/fonts/JosefinSans-Italic.ttf
+        - asset: assets/fonts/JosefinSans-Regular.ttf
+        - asset: assets/fonts/JosefinSans-SemiBold.ttf
+        - asset: assets/fonts/JosefinSans-Bold.ttf
 
   uses-material-design: true
