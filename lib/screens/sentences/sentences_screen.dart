@@ -55,7 +55,6 @@ class SentencesScreen extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context, String value) {
-    final width = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -107,21 +106,40 @@ class SentencesScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Icon(
-                        Icons.format_quote_rounded,
-                        size: 32,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: ScaledIcon(
+                          icon: Icons.format_quote_rounded,
+                          scale: 3.5,
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: Icon(
-                        Icons.add,
-                        size: 32,
+                      child: IconButton(
+                        onPressed: () =>
+                            _showDialog(context, onChange: (value) {
+                          BlocProvider.of<SentenceBloc>(context).add(
+                            SentenceEvent.newSentenceValueChanged(value),
+                          );
+                        }, onAdd: () {
+                          BlocProvider.of<SentenceBloc>(context).add(
+                            SentenceEvent.createNewSentence(),
+                          );
+                          Navigator.of(context).pop();
+                        }),
+                        icon: ScaledIcon(
+                          icon: Icons.add,
+                          scale: 3.5,
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: Icon(
-                        Icons.favorite,
-                        size: 28,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: ScaledIcon(
+                          icon: Icons.favorite,
+                          scale: 2.9,
+                        ),
                       ),
                     ),
                   ],
@@ -155,5 +173,111 @@ class SentencesScreen extends StatelessWidget {
           scale: 2.2,
           align: TextAlign.center,
         ));
+  }
+
+  Widget _showDialog(
+    BuildContext context, {
+    required Function(String) onChange,
+    required VoidCallback onAdd,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: _buildDialog(
+          context,
+          onChange,
+          onAdd,
+        ),
+      ),
+    );
+    return const SizedBox();
+  }
+
+  Widget _buildDialog(
+    BuildContext context,
+    Function(String) onChange,
+    VoidCallback onAdd,
+  ) {
+    return Center(
+      child: ScaledContainer(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        scale: 0.75,
+        borderRadius: BorderRadius.circular(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(child: const SizedBox()),
+            Expanded(
+              child: ScaledText(
+                scale: 2,
+                value: 'Add new sentence',
+                align: TextAlign.center,
+              ),
+            ),
+            Expanded(child: const SizedBox()),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: CustomTextField(
+                  onChange: onChange,
+                ),
+              ),
+            ),
+            Expanded(
+              child: TextButton(
+                onPressed: onAdd,
+                child: ScaledText(
+                  scale: 2,
+                  value: 'Add',
+                  align: TextAlign.center,
+                  style: TextStyle(color: Theme.of(context).accentColor),
+                ),
+              ),
+            ),
+            Expanded(child: const SizedBox()),
+          ],
+        ),
+        border: Border.all(
+          color: Theme.of(context).accentColor,
+          width: 2,
+        ),
+      ),
+    );
+  }
+}
+
+class CustomTextField extends StatelessWidget {
+  final Function(String) onChange;
+
+  const CustomTextField({Key? key, required this.onChange}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      onChanged: onChange,
+      maxLines: null,
+      cursorColor: Theme.of(context).primaryColor,
+      decoration: InputDecoration(
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+            width: 2,
+          ),
+        ),
+        filled: true,
+        fillColor: Theme.of(context).accentColor,
+        hintText: 'Write some sentence',
+        hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+              color: Theme.of(context).primaryColor.withOpacity(0.4),
+            ),
+      ),
+    );
   }
 }

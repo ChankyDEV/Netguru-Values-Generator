@@ -28,7 +28,7 @@ class RoutingService {
     }
   }
 
-  MaterialPageRoute<SentencesScreen> initial() {
+  MaterialPageRoute<Wrapper> initial() {
     final initializationBloc = getIt.get<InitializationBloc>();
     return MaterialPageRoute(
       builder: (context) => BlocProvider(

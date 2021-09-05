@@ -6,5 +6,6 @@ class SentenceState with _$SentenceState {
     required List<Sentence> sentences,
     required Sentence actualSentence,
     required bool didActualSentenceChange,
+    required String newSentenceValue,
   }) = Initial;
 }

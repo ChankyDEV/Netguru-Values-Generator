@@ -9,6 +9,7 @@ class ScaledContainer extends StatelessWidget {
   final Alignment? alignment;
   final BoxShape? shape;
   final BorderRadius? borderRadius;
+  final Border? border;
 
   const ScaledContainer({
     Key? key,
@@ -17,7 +18,8 @@ class ScaledContainer extends StatelessWidget {
     this.alignment,
     this.shape,
     this.child,
-    this.borderRadius
+    this.borderRadius,
+    this.border,
   }) : super(key: key);
 
   @override
@@ -32,6 +34,7 @@ class ScaledContainer extends StatelessWidget {
         color: color,
         shape: shape ?? BoxShape.rectangle,
         borderRadius: borderRadius,
+        border: border,
       ),
     );
   }

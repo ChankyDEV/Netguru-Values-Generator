@@ -23,6 +23,7 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
             sentences: [],
             actualSentence: Sentence('', false),
             didActualSentenceChange: false,
+            newSentenceValue: '',
           ),
         );
 
@@ -36,7 +37,8 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
       getAllSentences: _getAllSentences,
       showNewRandomSentence: _showRandomSentence,
       addToFavourite: _addToFavourite,
-      startShowingSentencesFromParticular: startShowingSentencesFromParticular,
+      newSentenceValueChanged: newSentenceValueChanged,
+      createNewSentence: createNewSentence,
     );
   }
 
@@ -100,7 +102,11 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
     final index = state.sentences.indexWhere(
       (element) => element.uid == sentence.uid,
     );
-    state.sentences[index] = sentence;
+    if (index != -1) {
+      state.sentences[index] = sentence;
+    } else {
+      state.sentences.add(sentence);
+    }
     return state.copyWith(
       sentences: state.sentences,
       actualSentence: state.actualSentence,
@@ -108,25 +114,19 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
     );
   }
 
-  Stream<SentenceState> startShowingSentencesFromParticular(
-      StartShowingSentencesFromParticular e) async* {
-    this.add(
-      SentenceEvent.showNewRandomSentence(
-        e.sentence,
-      ),
-    );
-    final random = Random();
-    timer = Timer.periodic(const Duration(seconds: 5), (_) {
-      int randomIndex = random.nextInt(state.sentences.length);
-      this.add(
-        SentenceEvent.showNewRandomSentence(
-          state.sentences[randomIndex],
-        ),
-      );
-    });
+  Stream<SentenceState> newSentenceValueChanged(
+    NewSentenceValueChanged e,
+  ) async* {
+    yield state.copyWith(newSentenceValue: e.value);
+    print(e.value);
+  }
 
-    yield state.copyWith(
-      sentences: state.sentences,
+  Stream<SentenceState> createNewSentence(CreateNewSentence e) async* {
+    final sentence = Sentence(state.newSentenceValue, false);
+    final failureOrSentence = await _sentenceService.saveSentence(sentence);
+    yield failureOrSentence.fold<SentenceState>(
+      (l) => _showError(l),
+      (r) => _updateSentences(sentence),
     );
   }
 }
