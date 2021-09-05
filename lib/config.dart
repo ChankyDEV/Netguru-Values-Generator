@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:netguru_values_generator/blocs/initialization/initialization_bloc.dart';
 import 'package:netguru_values_generator/blocs/sentence/sentence_bloc.dart';
-import 'package:netguru_values_generator/converters/sentence/sentence_to_dto_converter.dart';
+import 'package:netguru_values_generator/converters/sentence/sentence_converter.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/reposiories/sentence/sentence_repository.dart';
 import 'package:netguru_values_generator/reposiories/sentence/sentence_repository_impl.dart';

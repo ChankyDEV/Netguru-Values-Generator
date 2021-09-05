@@ -1,5 +1,5 @@
 import 'package:mockito/mockito.dart';
-import 'package:netguru_values_generator/converters/sentence/sentence_to_dto_converter.dart';
+import 'package:netguru_values_generator/converters/sentence/sentence_converter.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/models/sentence_dto.dart';
 
