@@ -92,22 +92,22 @@ class Utils {
             ),
           ),
           Positioned(
-              top: 10,
-              right: 10,
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
-                child: ScaledContainer(
-                  scale: 0.08,
-                  color: ColorUtils.of(context).text,
-                  shape: BoxShape.circle,
-                  child: ScaledIcon(
-                    scale: 1.6,
-                    icon: Icons.close,
-                    color: ColorUtils.of(context).background,
-                  ),
+            top: 10,
+            right: 10,
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).pop(),
+              child: ScaledContainer(
+                scale: 0.08,
+                color: ColorUtils.of(context).text,
+                shape: BoxShape.circle,
+                child: ScaledIcon(
+                  scale: 1.6,
+                  icon: Icons.close,
+                  color: ColorUtils.of(context).background,
                 ),
               ),
             ),
+          ),
         ],
       ),
     );
@@ -140,6 +140,36 @@ class Utils {
         hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
               color: ColorUtils.of(context).text.withOpacity(0.4),
             ),
+      ),
+    );
+  }
+
+  static Widget iconButtonWithBottomLabel(
+    BuildContext context, {
+    required IconData icon,
+    required double iconScale,
+    required String label,
+    required double labelScale,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ScaledIcon(
+            icon: icon,
+            scale: iconScale,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          ScaledText(
+            value: label,
+            scale: labelScale,
+            style: TextStyle(color: ColorUtils.of(context).background),
+          ),
+        ],
       ),
     );
   }

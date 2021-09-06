@@ -44,7 +44,7 @@ class SentencesScreen extends StatelessWidget {
                       context,
                       state.actualSentence.value,
                     ),
-                    _buildActions(context),
+                    _buildActions(context, state),
                   ],
                 )
               : Center(
@@ -67,8 +67,9 @@ class SentencesScreen extends StatelessWidget {
           color: ColorUtils.of(context).accent,
           shape: BoxShape.circle,
           child: ScaledIcon(
-            scale: 2.5,
+            scale: 3,
             icon: Icons.format_quote_rounded,
+            color: ColorUtils.of(context).text,
           ),
         ),
         Expanded(
@@ -91,34 +92,46 @@ class SentencesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActions(BuildContext context) {
+  Widget _buildActions(BuildContext context, SentenceState state) {
     final size = Utils.getSize(context);
     return MediaQuery.of(context).orientation == Orientation.landscape
         ? const SizedBox()
         : Positioned(
-            bottom: 30,
+            bottom: 20,
             right: 0,
             left: 0,
             child: Container(
-              height: size * 0.15,
+              height: size * 0.17,
               alignment: Alignment.center,
               child: ScaledContainer(
-                scale: 0.6,
+                scale: 0.85,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(
+                      width: 20,
+                    ),
                     Expanded(
-                      child: IconButton(
-                        onPressed: () => Navigator.of(context).pushNamed(Screens.allSentences),
-                        icon: ScaledIcon(
-                          icon: Icons.format_quote_rounded,
-                          scale: 2.7,
+                      child: Utils.iconButtonWithBottomLabel(
+                        context,
+                        icon: Icons.format_quote_rounded,
+                        iconScale: 2.9,
+                        label: 'All',
+                        labelScale: 1.4,
+                        onTap: () => Navigator.of(context).pushNamed(
+                          Screens.allSentences,
+                          arguments: state.sentences,
                         ),
                       ),
                     ),
                     Expanded(
-                      child: IconButton(
-                        onPressed: () => Utils.showTextFieldDialog(
+                      child: Utils.iconButtonWithBottomLabel(
+                        context,
+                        icon: Icons.add,
+                        iconScale: 2.9,
+                        label: 'Add',
+                        labelScale: 1.4,
+                        onTap: () => Utils.showTextFieldDialog(
                           context,
                           header: 'Add new sentence',
                           hint: 'Sentence value',
@@ -134,25 +147,25 @@ class SentencesScreen extends StatelessWidget {
                             Navigator.of(context).pop();
                           },
                         ),
-                        icon: ScaledIcon(
-                          icon: Icons.add,
-                          scale: 2.7,
-                        ),
                       ),
                     ),
                     Expanded(
-                      child: IconButton(
-                        onPressed: () => Navigator.of(context).pushNamed(Screens.favourites),
-                        icon: ScaledIcon(
-                          icon: Icons.favorite,
-                          scale: 2.3,
-                        ),
+                      child: Utils.iconButtonWithBottomLabel(
+                        context,
+                        icon: Icons.favorite,
+                        iconScale: 2.8,
+                        label: 'Favourite',
+                        labelScale: 1.4,
+                        onTap: () =>
+                            Navigator.of(context).pushNamed(Screens.favourites),
                       ),
+                    ),
+                    const SizedBox(
+                      width: 20,
                     ),
                   ],
                 ),
                 color: ColorUtils.of(context).text,
-                shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(36),
               ),
             ),
