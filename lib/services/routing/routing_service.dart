@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:netguru_values_generator/blocs/all_sentences/all_sentences_bloc.dart';
+import 'package:netguru_values_generator/blocs/favourites/favourite_bloc.dart';
 import 'package:netguru_values_generator/blocs/initialization/initialization_bloc.dart';
 import 'package:netguru_values_generator/blocs/sentence/sentence_bloc.dart';
 import 'package:netguru_values_generator/screens/sentences/all_sentences_screen.dart';
 import 'package:netguru_values_generator/screens/sentences/favourite_screen.dart';
 import 'package:netguru_values_generator/screens/sentences/sentences_screen.dart';
 import 'package:netguru_values_generator/screens/wrapper.dart';
+import 'package:netguru_values_generator/services/sentence/sentence_service.dart';
 
 class Screens {
   static const initial = '/';
@@ -63,14 +66,24 @@ class RoutingService {
   }
 
   MaterialPageRoute favourites() {
+    final sentenceService = getIt.get<SentenceService>();
     return MaterialPageRoute(
-      builder: (context) => FavouritesScreen(),
+      builder: (context) => BlocProvider(
+        create: (context) =>
+            FavouriteBloc(sentenceService)..getFavouriteSentences(),
+        child: FavouritesScreen(),
+      ),
     );
   }
 
   MaterialPageRoute allSentences() {
+    final sentenceService = getIt.get<SentenceService>();
     return MaterialPageRoute(
-      builder: (context) => AllSentencesScreen(),
+      builder: (context) => BlocProvider(
+        create: (context) =>
+            AllSentencesBloc(sentenceService)..getAllSentences(),
+        child: AllSentencesScreen(),
+      ),
     );
   }
 }

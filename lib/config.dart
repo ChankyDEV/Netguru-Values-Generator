@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:netguru_values_generator/blocs/all_sentences/all_sentences_bloc.dart';
 import 'package:netguru_values_generator/blocs/initialization/initialization_bloc.dart';
 import 'package:netguru_values_generator/blocs/sentence/sentence_bloc.dart';
 import 'package:netguru_values_generator/converters/sentence/sentence_converter.dart';
@@ -69,6 +70,11 @@ class Config {
       )
       ..registerSingleton<SentenceBloc>(
         SentenceBloc(
+          getIt.get<SentenceService>(),
+        ),
+      )
+      ..registerSingleton<AllSentencesBloc>(
+        AllSentencesBloc(
           getIt.get<SentenceService>(),
         ),
       );

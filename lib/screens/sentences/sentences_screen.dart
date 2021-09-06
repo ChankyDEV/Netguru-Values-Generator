@@ -134,7 +134,7 @@ class SentencesScreen extends StatelessWidget {
                         onTap: () => Utils.showTextFieldDialog(
                           context,
                           header: 'Add new sentence',
-                          hint: 'Sentence value',
+                          hint: 'Sentence',
                           onChange: (value) {
                             BlocProvider.of<SentenceBloc>(context).add(
                               SentenceEvent.newSentenceValueChanged(value),
