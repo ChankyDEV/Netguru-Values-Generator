@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:netguru_values_generator/blocs/initialization/initialization_bloc.dart';
 import 'package:netguru_values_generator/blocs/sentence/sentence_bloc.dart';
+import 'package:netguru_values_generator/screens/sentences/all_sentences_screen.dart';
+import 'package:netguru_values_generator/screens/sentences/favourite_screen.dart';
 import 'package:netguru_values_generator/screens/sentences/sentences_screen.dart';
 import 'package:netguru_values_generator/screens/wrapper.dart';
 
@@ -10,6 +12,8 @@ class Screens {
   static const initial = '/';
   static const sentences = '/sentences';
   static const error = '/error';
+  static const favourites = '/favourites';
+  static const allSentences = '/allSentences';
 }
 
 class RoutingService {
@@ -23,6 +27,10 @@ class RoutingService {
         return sentences();
       case Screens.error:
         return error();
+      case Screens.favourites:
+        return favourites();
+      case Screens.allSentences:
+        return allSentences();
       default:
         return sentences();
     }
@@ -51,6 +59,18 @@ class RoutingService {
   MaterialPageRoute error() {
     return MaterialPageRoute(
       builder: (context) => Container(),
+    );
+  }
+
+  MaterialPageRoute favourites() {
+    return MaterialPageRoute(
+      builder: (context) => FavouritesScreen(),
+    );
+  }
+
+  MaterialPageRoute allSentences() {
+    return MaterialPageRoute(
+      builder: (context) => AllSentencesScreen(),
     );
   }
 }

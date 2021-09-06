@@ -82,12 +82,6 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
     );
   }
 
-  @override
-  Future<void> close() {
-    timer.cancel();
-    return super.close();
-  }
-
   Stream<SentenceState> _addToFavourite(AddToFavourite e) async* {
     e.sentence.changeFavouriteStatus();
     final failureOrSavedSentence =

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ColorUtils {
-  BuildContext context;
+  final BuildContext context;
 
   ColorUtils(this.context);
 
