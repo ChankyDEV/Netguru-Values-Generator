@@ -107,10 +107,7 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
         await _sentenceService.saveSentence(e.sentence);
     yield failureOrSavedSentence.fold<SentenceState>(
       (l) => _processError(l),
-      (r) {
-        print(r.uid + 'xdddddddddddd2');
-        return _updateSentences(r);
-      },
+      (r) => _updateSentences(r),
     );
   }
 

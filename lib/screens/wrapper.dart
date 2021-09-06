@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netguru_values_generator/blocs/initialization/initialization_bloc.dart';
+import 'package:netguru_values_generator/screens/core/loading_screen.dart';
 import 'package:netguru_values_generator/services/routing/routing_service.dart';
 
 class Wrapper extends StatelessWidget {
@@ -19,9 +20,7 @@ class Wrapper extends StatelessWidget {
             }
           }
         },
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
+        child: LoadingScreen(),
       ),
     );
   }

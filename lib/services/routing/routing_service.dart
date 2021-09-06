@@ -5,6 +5,10 @@ import 'package:netguru_values_generator/blocs/all_sentences/all_sentences_bloc.
 import 'package:netguru_values_generator/blocs/favourites/favourite_bloc.dart';
 import 'package:netguru_values_generator/blocs/initialization/initialization_bloc.dart';
 import 'package:netguru_values_generator/blocs/sentence/sentence_bloc.dart';
+import 'package:netguru_values_generator/screens/color_utils.dart';
+import 'package:netguru_values_generator/screens/core/error_screen.dart';
+import 'package:netguru_values_generator/screens/core/scaled_container.dart';
+import 'package:netguru_values_generator/screens/core/scaled_icon.dart';
 import 'package:netguru_values_generator/screens/sentences/all_sentences_screen.dart';
 import 'package:netguru_values_generator/screens/sentences/favourite_screen.dart';
 import 'package:netguru_values_generator/screens/sentences/sentences_screen.dart';
@@ -61,7 +65,22 @@ class RoutingService {
 
   MaterialPageRoute error() {
     return MaterialPageRoute(
-      builder: (context) => Container(),
+      builder: (context) => ErrorScreen(
+        information: 'Something goes wrong, please reinstall the app',
+        child: ScaledContainer(
+          scale: 0.4,
+          color: ColorUtils.of(context).red,
+          shape: BoxShape.circle,
+          child: ScaledIcon(
+            scale: 8,
+            icon: Icons.cancel_outlined,
+            color: ColorUtils.of(context).background,
+          ),
+        ),
+        isRetryButtonClicked: false,
+        onRetryButtonClick: () {},
+        showButton: false,
+      ),
     );
   }
 

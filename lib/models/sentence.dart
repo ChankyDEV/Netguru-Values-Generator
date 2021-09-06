@@ -2,19 +2,15 @@ import 'package:equatable/equatable.dart';
 
 //ignore: must_be_immutable
 class Sentence extends Equatable {
-  String _uid;
-  String _value;
+  final String uid;
+  final String value;
   bool _isFavourite;
 
   Sentence(
-    this._uid,
-    this._value,
+    this.uid,
+    this.value,
     this._isFavourite,
   );
-
-  String get uid => this._uid;
-
-  String get value => this._value;
 
   bool get isFavourite => this._isFavourite;
 
@@ -24,8 +20,8 @@ class Sentence extends Equatable {
 
   @override
   List<Object?> get props => [
-        this._uid,
-        this._value,
+        this.uid,
+        this.value,
         this._isFavourite,
       ];
 
