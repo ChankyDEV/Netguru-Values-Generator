@@ -40,10 +40,10 @@ class SentenceServiceImpl implements SentenceService {
       final dto = _converter.convertToDto(sentenceToSave);
       final sentence = await _repository.saveSentence(dto);
       return right(_converter.convertFromDto(sentence));
-    } on SentenceException {
+    } on SentenceException catch (e) {
       return left(
-        const Failure(
-          SentenceErrorMessages.cantSaveSentence,
+        Failure(
+          e.message,
         ),
       );
     }

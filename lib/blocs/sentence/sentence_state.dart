@@ -6,6 +6,11 @@ class SentenceState with _$SentenceState {
     required List<Sentence> sentences,
     required Sentence actualSentence,
     required bool didActualSentenceChange,
+    required bool isLoading,
     required String newSentenceValue,
+    required bool hasError,
+    required bool isRetryButtonClicked,
+    required String errorMessage,
+    required bool showSnackBar,
   }) = Initial;
 }

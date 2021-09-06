@@ -17,6 +17,7 @@ class InitializationBloc
           InitializationState.initial(
             isLoading: true,
             didConfigureApp: false,
+            hasError: false,
           ),
         );
 

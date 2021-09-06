@@ -20,12 +20,15 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
             favourites: <Sentence>[],
             hasError: false,
             isLoading: true,
+            errorMessage: '',
           ),
         );
 
   @override
   Stream<FavouriteState> mapEventToState(FavouriteEvent event) async* {
-    yield* event.map(getFavourites: _getFavourites);
+    yield* event.map(
+      getFavourites: _getFavourites,
+    );
   }
 
   Stream<FavouriteState> _getFavourites(GetFavourites value) async* {
@@ -42,10 +45,11 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
     );
   }
 
-  FavouriteState _showError(Failure l) {
+  FavouriteState _showError(Failure f) {
     return state.copyWith(
       isLoading: false,
       hasError: true,
+      errorMessage: f.message,
     );
   }
 
@@ -53,6 +57,7 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
     return state.copyWith(
       favourites: favouriteSentences,
       isLoading: false,
+      hasError: false,
     );
   }
 }

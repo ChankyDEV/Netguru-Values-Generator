@@ -3,7 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netguru_values_generator/blocs/favourites/favourite_bloc.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/screens/color_utils.dart';
+import 'package:netguru_values_generator/screens/core/error_screen.dart';
+import 'package:netguru_values_generator/screens/core/loading_screen.dart';
+import 'package:netguru_values_generator/screens/core/scaled_container.dart';
+import 'package:netguru_values_generator/screens/core/scaled_icon.dart';
 import 'package:netguru_values_generator/screens/core/scaled_text.dart';
+import 'package:netguru_values_generator/utils/consts.dart';
 
 class FavouritesScreen extends StatelessWidget {
   const FavouritesScreen({Key? key}) : super(key: key);
@@ -23,12 +28,41 @@ class FavouritesScreen extends StatelessWidget {
       body: BlocConsumer<FavouriteBloc, FavouriteState>(
         listener: (context, state) {},
         builder: (context, state) => state.isLoading
-            ? CircularProgressIndicator()
-            : _buildContent(
-                context,
-                state.favourites,
-              ),
+            ? LoadingScreen()
+            : !state.hasError
+                ? _buildContent(
+                    context,
+                    state.favourites,
+                  )
+                : _showErrorScreen(context, state.errorMessage),
       ),
+    );
+  }
+
+  Widget _showErrorScreen(BuildContext context, String errorMessage) {
+    final msg = errorMessage == SentenceErrorMessages.noFavouriteSentences
+        ? 'No favourites here :/'
+        : 'Somehow we can\'t get your favourites';
+    final icon = errorMessage == SentenceErrorMessages.noFavouriteSentences
+        ? Icons.favorite_outline
+        : Icons.cancel_outlined;
+    return ErrorScreen(
+      information: msg,
+      child: ScaledContainer(
+        scale: 0.4,
+        color: ColorUtils.of(context).red,
+        shape: BoxShape.circle,
+        child: ScaledIcon(
+          scale: 8,
+          icon: Icons.favorite_outline,
+          color: ColorUtils.of(context).background,
+        ),
+      ),
+      isRetryButtonClicked: false,
+      onRetryButtonClick: () => BlocProvider.of<FavouriteBloc>(context).add(
+        FavouriteEvent.getFavourites(),
+      ),
+      showButton: false,
     );
   }
 }
@@ -39,23 +73,12 @@ Widget _buildContent(
 ) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
-    child: sentences.isNotEmpty
-        ? ListView.builder(
-            itemCount: sentences.length,
-            itemBuilder: (context, index) => _buildListItem(
-              context,
-              sentence: sentences[index],
-            ),
-          )
-        : _buildNoDataScreen(),
-  );
-}
-
-Widget _buildNoDataScreen() {
-  return Center(
-    child: ScaledText(
-      value: 'You dont have favourites',
-      scale: 2.5,
+    child: ListView.builder(
+      itemCount: sentences.length,
+      itemBuilder: (context, index) => _buildListItem(
+        context,
+        sentence: sentences[index],
+      ),
     ),
   );
 }

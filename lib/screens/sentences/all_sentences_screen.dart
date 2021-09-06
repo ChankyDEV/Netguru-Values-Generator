@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netguru_values_generator/blocs/all_sentences/all_sentences_bloc.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/screens/color_utils.dart';
+import 'package:netguru_values_generator/screens/core/error_screen.dart';
+import 'package:netguru_values_generator/screens/core/loading_screen.dart';
+import 'package:netguru_values_generator/screens/core/scaled_container.dart';
+import 'package:netguru_values_generator/screens/core/scaled_icon.dart';
 import 'package:netguru_values_generator/screens/core/scaled_text.dart';
 
 class AllSentencesScreen extends StatelessWidget {
@@ -23,11 +27,16 @@ class AllSentencesScreen extends StatelessWidget {
       body: BlocConsumer<AllSentencesBloc, AllSentencesState>(
         listener: (context, state) {},
         builder: (context, state) => state.isLoading
-            ? CircularProgressIndicator()
-            : _buildContent(
-                context,
-                state.sentences,
-              ),
+            ? LoadingScreen()
+            : state.hasError
+                ? _showErrorScreen(
+                    context,
+                    state.isRetryButtonClicked,
+                  )
+                : _buildContent(
+                    context,
+                    state.sentences,
+                  ),
       ),
     );
   }
@@ -57,6 +66,30 @@ class AllSentencesScreen extends StatelessWidget {
           scale: 1.5,
         ),
       ),
+    );
+  }
+
+  Widget _showErrorScreen(BuildContext context, bool isRetryButtonClicked) {
+    return ErrorScreen(
+      information: 'We can\'t show you all sentences :(',
+      isRetryButtonClicked: isRetryButtonClicked,
+      onRetryButtonClick: () => getFavourites(context),
+      child: ScaledContainer(
+        scale: 0.4,
+        color: ColorUtils.of(context).red,
+        shape: BoxShape.circle,
+        child: ScaledIcon(
+          scale: 8,
+          icon: Icons.cancel_outlined,
+          color: ColorUtils.of(context).background,
+        ),
+      ),
+    );
+  }
+
+  void getFavourites(BuildContext context) {
+    BlocProvider.of<AllSentencesBloc>(context).add(
+      AllSentencesEvent.reload(),
     );
   }
 }

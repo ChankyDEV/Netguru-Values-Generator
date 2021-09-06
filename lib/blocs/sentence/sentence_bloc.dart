@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:netguru_values_generator/models/failure.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/services/sentence/sentence_service.dart';
+import 'package:netguru_values_generator/utils/consts.dart';
 
 part 'sentence_bloc.freezed.dart';
 
@@ -24,6 +25,11 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
             actualSentence: Sentence('', false),
             didActualSentenceChange: false,
             newSentenceValue: '',
+            hasError: false,
+            showSnackBar: false,
+            isLoading: true,
+            isRetryButtonClicked: false,
+            errorMessage: '',
           ),
         );
 
@@ -37,21 +43,33 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
       getAllSentences: _getAllSentences,
       showNewRandomSentence: _showRandomSentence,
       addToFavourite: _addToFavourite,
-      newSentenceValueChanged: newSentenceValueChanged,
-      createNewSentence: createNewSentence,
+      newSentenceValueChanged: _newSentenceValueChanged,
+      createNewSentence: _createNewSentence,
+      reload: _reload,
+      clearNewSentenceValue: _clearNewSentenceValue,
+      reset: _reset,
     );
   }
 
   Stream<SentenceState> _getAllSentences(GetAllSentences value) async* {
     final failureOrSentences = await _sentenceService.getAllSentences();
     yield failureOrSentences.fold<SentenceState>(
-      (l) => _showError(l),
+      (l) => _processError(l),
       (r) => _startShowingSentences(r),
     );
   }
 
-  SentenceState _showError(Failure error) {
-    return state;
+  SentenceState _processError(Failure error) {
+    if (error.message == SentenceErrorMessages.sentenceValueIsNotValid) {
+      return state.copyWith(
+        showSnackBar: true,
+        errorMessage: error.message,
+      );
+    }
+    return state.copyWith(
+      hasError: true,
+      errorMessage: error.message,
+    );
   }
 
   SentenceState _startShowingSentences(List<Sentence> sentences) {
@@ -72,6 +90,7 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
 
     return state.copyWith(
       sentences: sentences,
+      isLoading: false,
     );
   }
 
@@ -87,7 +106,7 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
     final failureOrSavedSentence =
         await _sentenceService.saveSentence(e.sentence);
     yield failureOrSavedSentence.fold<SentenceState>(
-      (l) => _showError(l),
+      (l) => _processError(l),
       (r) => _updateSentences(r),
     );
   }
@@ -105,22 +124,66 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
       sentences: state.sentences,
       actualSentence: state.actualSentence,
       didActualSentenceChange: true,
+      newSentenceValue: '',
     );
   }
 
-  Stream<SentenceState> newSentenceValueChanged(
+  Stream<SentenceState> _newSentenceValueChanged(
     NewSentenceValueChanged e,
   ) async* {
     yield state.copyWith(newSentenceValue: e.value);
     print(e.value);
   }
 
-  Stream<SentenceState> createNewSentence(CreateNewSentence e) async* {
+  Stream<SentenceState> _createNewSentence(CreateNewSentence e) async* {
     final sentence = Sentence(state.newSentenceValue, false);
     final failureOrSentence = await _sentenceService.saveSentence(sentence);
     yield failureOrSentence.fold<SentenceState>(
-      (l) => _showError(l),
+      (l) => _processError(l),
       (r) => _updateSentences(sentence),
+    );
+  }
+
+  Stream<SentenceState> _reload(Reload value) async* {
+    yield _tapOrReleaseRetryButton();
+    await Future.delayed(const Duration(seconds: 2));
+    yield* allCategories();
+    yield _tapOrReleaseRetryButton();
+  }
+
+  Stream<SentenceState> allCategories() async* {
+    final failureOrSentences = await _sentenceService.getAllSentences();
+    yield failureOrSentences.fold<SentenceState>(
+      (l) => _processError(l),
+      (r) => _startShowingSentences(r),
+    );
+  }
+
+  SentenceState _tapOrReleaseRetryButton() {
+    return state.copyWith(
+      isRetryButtonClicked: !state.isRetryButtonClicked,
+      hasError: false,
+    );
+  }
+
+  Stream<SentenceState> _clearNewSentenceValue(
+      ClearNewSentenceValue value) async* {
+    state.copyWith(
+      newSentenceValue: '',
+    );
+  }
+
+  Stream<SentenceState> _reset(Reset value) async* {
+    yield SentenceState.initial(
+      sentences: state.sentences,
+      actualSentence: state.actualSentence,
+      didActualSentenceChange: false,
+      isLoading: false,
+      newSentenceValue: '',
+      hasError: false,
+      isRetryButtonClicked: false,
+      errorMessage: '',
+      showSnackBar: false,
     );
   }
 }

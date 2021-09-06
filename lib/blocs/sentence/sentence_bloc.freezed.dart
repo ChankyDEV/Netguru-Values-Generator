@@ -41,6 +41,18 @@ class _$SentenceEventTearOff {
   CreateNewSentence createNewSentence() {
     return const CreateNewSentence();
   }
+
+  Reload reload() {
+    return const Reload();
+  }
+
+  ClearNewSentenceValue clearNewSentenceValue() {
+    return const ClearNewSentenceValue();
+  }
+
+  Reset reset() {
+    return const Reset();
+  }
 }
 
 /// @nodoc
@@ -55,6 +67,9 @@ mixin _$SentenceEvent {
     required TResult Function(Sentence sentence) addToFavourite,
     required TResult Function(String value) newSentenceValueChanged,
     required TResult Function() createNewSentence,
+    required TResult Function() reload,
+    required TResult Function() clearNewSentenceValue,
+    required TResult Function() reset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +79,9 @@ mixin _$SentenceEvent {
     TResult Function(Sentence sentence)? addToFavourite,
     TResult Function(String value)? newSentenceValueChanged,
     TResult Function()? createNewSentence,
+    TResult Function()? reload,
+    TResult Function()? clearNewSentenceValue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -76,6 +94,10 @@ mixin _$SentenceEvent {
     required TResult Function(NewSentenceValueChanged value)
         newSentenceValueChanged,
     required TResult Function(CreateNewSentence value) createNewSentence,
+    required TResult Function(Reload value) reload,
+    required TResult Function(ClearNewSentenceValue value)
+        clearNewSentenceValue,
+    required TResult Function(Reset value) reset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,6 +107,9 @@ mixin _$SentenceEvent {
     TResult Function(AddToFavourite value)? addToFavourite,
     TResult Function(NewSentenceValueChanged value)? newSentenceValueChanged,
     TResult Function(CreateNewSentence value)? createNewSentence,
+    TResult Function(Reload value)? reload,
+    TResult Function(ClearNewSentenceValue value)? clearNewSentenceValue,
+    TResult Function(Reset value)? reset,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -152,6 +177,9 @@ class _$GetAllSentences implements GetAllSentences {
     required TResult Function(Sentence sentence) addToFavourite,
     required TResult Function(String value) newSentenceValueChanged,
     required TResult Function() createNewSentence,
+    required TResult Function() reload,
+    required TResult Function() clearNewSentenceValue,
+    required TResult Function() reset,
   }) {
     return getAllSentences();
   }
@@ -164,6 +192,9 @@ class _$GetAllSentences implements GetAllSentences {
     TResult Function(Sentence sentence)? addToFavourite,
     TResult Function(String value)? newSentenceValueChanged,
     TResult Function()? createNewSentence,
+    TResult Function()? reload,
+    TResult Function()? clearNewSentenceValue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (getAllSentences != null) {
@@ -182,6 +213,10 @@ class _$GetAllSentences implements GetAllSentences {
     required TResult Function(NewSentenceValueChanged value)
         newSentenceValueChanged,
     required TResult Function(CreateNewSentence value) createNewSentence,
+    required TResult Function(Reload value) reload,
+    required TResult Function(ClearNewSentenceValue value)
+        clearNewSentenceValue,
+    required TResult Function(Reset value) reset,
   }) {
     return getAllSentences(this);
   }
@@ -194,6 +229,9 @@ class _$GetAllSentences implements GetAllSentences {
     TResult Function(AddToFavourite value)? addToFavourite,
     TResult Function(NewSentenceValueChanged value)? newSentenceValueChanged,
     TResult Function(CreateNewSentence value)? createNewSentence,
+    TResult Function(Reload value)? reload,
+    TResult Function(ClearNewSentenceValue value)? clearNewSentenceValue,
+    TResult Function(Reset value)? reset,
     required TResult orElse(),
   }) {
     if (getAllSentences != null) {
@@ -279,6 +317,9 @@ class _$ShowNewRandomSentence implements ShowNewRandomSentence {
     required TResult Function(Sentence sentence) addToFavourite,
     required TResult Function(String value) newSentenceValueChanged,
     required TResult Function() createNewSentence,
+    required TResult Function() reload,
+    required TResult Function() clearNewSentenceValue,
+    required TResult Function() reset,
   }) {
     return showNewRandomSentence(sentence);
   }
@@ -291,6 +332,9 @@ class _$ShowNewRandomSentence implements ShowNewRandomSentence {
     TResult Function(Sentence sentence)? addToFavourite,
     TResult Function(String value)? newSentenceValueChanged,
     TResult Function()? createNewSentence,
+    TResult Function()? reload,
+    TResult Function()? clearNewSentenceValue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (showNewRandomSentence != null) {
@@ -309,6 +353,10 @@ class _$ShowNewRandomSentence implements ShowNewRandomSentence {
     required TResult Function(NewSentenceValueChanged value)
         newSentenceValueChanged,
     required TResult Function(CreateNewSentence value) createNewSentence,
+    required TResult Function(Reload value) reload,
+    required TResult Function(ClearNewSentenceValue value)
+        clearNewSentenceValue,
+    required TResult Function(Reset value) reset,
   }) {
     return showNewRandomSentence(this);
   }
@@ -321,6 +369,9 @@ class _$ShowNewRandomSentence implements ShowNewRandomSentence {
     TResult Function(AddToFavourite value)? addToFavourite,
     TResult Function(NewSentenceValueChanged value)? newSentenceValueChanged,
     TResult Function(CreateNewSentence value)? createNewSentence,
+    TResult Function(Reload value)? reload,
+    TResult Function(ClearNewSentenceValue value)? clearNewSentenceValue,
+    TResult Function(Reset value)? reset,
     required TResult orElse(),
   }) {
     if (showNewRandomSentence != null) {
@@ -411,6 +462,9 @@ class _$AddToFavourite implements AddToFavourite {
     required TResult Function(Sentence sentence) addToFavourite,
     required TResult Function(String value) newSentenceValueChanged,
     required TResult Function() createNewSentence,
+    required TResult Function() reload,
+    required TResult Function() clearNewSentenceValue,
+    required TResult Function() reset,
   }) {
     return addToFavourite(sentence);
   }
@@ -423,6 +477,9 @@ class _$AddToFavourite implements AddToFavourite {
     TResult Function(Sentence sentence)? addToFavourite,
     TResult Function(String value)? newSentenceValueChanged,
     TResult Function()? createNewSentence,
+    TResult Function()? reload,
+    TResult Function()? clearNewSentenceValue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (addToFavourite != null) {
@@ -441,6 +498,10 @@ class _$AddToFavourite implements AddToFavourite {
     required TResult Function(NewSentenceValueChanged value)
         newSentenceValueChanged,
     required TResult Function(CreateNewSentence value) createNewSentence,
+    required TResult Function(Reload value) reload,
+    required TResult Function(ClearNewSentenceValue value)
+        clearNewSentenceValue,
+    required TResult Function(Reset value) reset,
   }) {
     return addToFavourite(this);
   }
@@ -453,6 +514,9 @@ class _$AddToFavourite implements AddToFavourite {
     TResult Function(AddToFavourite value)? addToFavourite,
     TResult Function(NewSentenceValueChanged value)? newSentenceValueChanged,
     TResult Function(CreateNewSentence value)? createNewSentence,
+    TResult Function(Reload value)? reload,
+    TResult Function(ClearNewSentenceValue value)? clearNewSentenceValue,
+    TResult Function(Reset value)? reset,
     required TResult orElse(),
   }) {
     if (addToFavourite != null) {
@@ -542,6 +606,9 @@ class _$NewSentenceValueChanged implements NewSentenceValueChanged {
     required TResult Function(Sentence sentence) addToFavourite,
     required TResult Function(String value) newSentenceValueChanged,
     required TResult Function() createNewSentence,
+    required TResult Function() reload,
+    required TResult Function() clearNewSentenceValue,
+    required TResult Function() reset,
   }) {
     return newSentenceValueChanged(value);
   }
@@ -554,6 +621,9 @@ class _$NewSentenceValueChanged implements NewSentenceValueChanged {
     TResult Function(Sentence sentence)? addToFavourite,
     TResult Function(String value)? newSentenceValueChanged,
     TResult Function()? createNewSentence,
+    TResult Function()? reload,
+    TResult Function()? clearNewSentenceValue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (newSentenceValueChanged != null) {
@@ -572,6 +642,10 @@ class _$NewSentenceValueChanged implements NewSentenceValueChanged {
     required TResult Function(NewSentenceValueChanged value)
         newSentenceValueChanged,
     required TResult Function(CreateNewSentence value) createNewSentence,
+    required TResult Function(Reload value) reload,
+    required TResult Function(ClearNewSentenceValue value)
+        clearNewSentenceValue,
+    required TResult Function(Reset value) reset,
   }) {
     return newSentenceValueChanged(this);
   }
@@ -584,6 +658,9 @@ class _$NewSentenceValueChanged implements NewSentenceValueChanged {
     TResult Function(AddToFavourite value)? addToFavourite,
     TResult Function(NewSentenceValueChanged value)? newSentenceValueChanged,
     TResult Function(CreateNewSentence value)? createNewSentence,
+    TResult Function(Reload value)? reload,
+    TResult Function(ClearNewSentenceValue value)? clearNewSentenceValue,
+    TResult Function(Reset value)? reset,
     required TResult orElse(),
   }) {
     if (newSentenceValueChanged != null) {
@@ -648,6 +725,9 @@ class _$CreateNewSentence implements CreateNewSentence {
     required TResult Function(Sentence sentence) addToFavourite,
     required TResult Function(String value) newSentenceValueChanged,
     required TResult Function() createNewSentence,
+    required TResult Function() reload,
+    required TResult Function() clearNewSentenceValue,
+    required TResult Function() reset,
   }) {
     return createNewSentence();
   }
@@ -660,6 +740,9 @@ class _$CreateNewSentence implements CreateNewSentence {
     TResult Function(Sentence sentence)? addToFavourite,
     TResult Function(String value)? newSentenceValueChanged,
     TResult Function()? createNewSentence,
+    TResult Function()? reload,
+    TResult Function()? clearNewSentenceValue,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (createNewSentence != null) {
@@ -678,6 +761,10 @@ class _$CreateNewSentence implements CreateNewSentence {
     required TResult Function(NewSentenceValueChanged value)
         newSentenceValueChanged,
     required TResult Function(CreateNewSentence value) createNewSentence,
+    required TResult Function(Reload value) reload,
+    required TResult Function(ClearNewSentenceValue value)
+        clearNewSentenceValue,
+    required TResult Function(Reset value) reset,
   }) {
     return createNewSentence(this);
   }
@@ -690,6 +777,9 @@ class _$CreateNewSentence implements CreateNewSentence {
     TResult Function(AddToFavourite value)? addToFavourite,
     TResult Function(NewSentenceValueChanged value)? newSentenceValueChanged,
     TResult Function(CreateNewSentence value)? createNewSentence,
+    TResult Function(Reload value)? reload,
+    TResult Function(ClearNewSentenceValue value)? clearNewSentenceValue,
+    TResult Function(Reset value)? reset,
     required TResult orElse(),
   }) {
     if (createNewSentence != null) {
@@ -704,6 +794,339 @@ abstract class CreateNewSentence implements SentenceEvent {
 }
 
 /// @nodoc
+abstract class $ReloadCopyWith<$Res> {
+  factory $ReloadCopyWith(Reload value, $Res Function(Reload) then) =
+      _$ReloadCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$ReloadCopyWithImpl<$Res> extends _$SentenceEventCopyWithImpl<$Res>
+    implements $ReloadCopyWith<$Res> {
+  _$ReloadCopyWithImpl(Reload _value, $Res Function(Reload) _then)
+      : super(_value, (v) => _then(v as Reload));
+
+  @override
+  Reload get _value => super._value as Reload;
+}
+
+/// @nodoc
+
+class _$Reload implements Reload {
+  const _$Reload();
+
+  @override
+  String toString() {
+    return 'SentenceEvent.reload()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is Reload);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getAllSentences,
+    required TResult Function(Sentence sentence) showNewRandomSentence,
+    required TResult Function(Sentence sentence) addToFavourite,
+    required TResult Function(String value) newSentenceValueChanged,
+    required TResult Function() createNewSentence,
+    required TResult Function() reload,
+    required TResult Function() clearNewSentenceValue,
+    required TResult Function() reset,
+  }) {
+    return reload();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getAllSentences,
+    TResult Function(Sentence sentence)? showNewRandomSentence,
+    TResult Function(Sentence sentence)? addToFavourite,
+    TResult Function(String value)? newSentenceValueChanged,
+    TResult Function()? createNewSentence,
+    TResult Function()? reload,
+    TResult Function()? clearNewSentenceValue,
+    TResult Function()? reset,
+    required TResult orElse(),
+  }) {
+    if (reload != null) {
+      return reload();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetAllSentences value) getAllSentences,
+    required TResult Function(ShowNewRandomSentence value)
+        showNewRandomSentence,
+    required TResult Function(AddToFavourite value) addToFavourite,
+    required TResult Function(NewSentenceValueChanged value)
+        newSentenceValueChanged,
+    required TResult Function(CreateNewSentence value) createNewSentence,
+    required TResult Function(Reload value) reload,
+    required TResult Function(ClearNewSentenceValue value)
+        clearNewSentenceValue,
+    required TResult Function(Reset value) reset,
+  }) {
+    return reload(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetAllSentences value)? getAllSentences,
+    TResult Function(ShowNewRandomSentence value)? showNewRandomSentence,
+    TResult Function(AddToFavourite value)? addToFavourite,
+    TResult Function(NewSentenceValueChanged value)? newSentenceValueChanged,
+    TResult Function(CreateNewSentence value)? createNewSentence,
+    TResult Function(Reload value)? reload,
+    TResult Function(ClearNewSentenceValue value)? clearNewSentenceValue,
+    TResult Function(Reset value)? reset,
+    required TResult orElse(),
+  }) {
+    if (reload != null) {
+      return reload(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Reload implements SentenceEvent {
+  const factory Reload() = _$Reload;
+}
+
+/// @nodoc
+abstract class $ClearNewSentenceValueCopyWith<$Res> {
+  factory $ClearNewSentenceValueCopyWith(ClearNewSentenceValue value,
+          $Res Function(ClearNewSentenceValue) then) =
+      _$ClearNewSentenceValueCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$ClearNewSentenceValueCopyWithImpl<$Res>
+    extends _$SentenceEventCopyWithImpl<$Res>
+    implements $ClearNewSentenceValueCopyWith<$Res> {
+  _$ClearNewSentenceValueCopyWithImpl(
+      ClearNewSentenceValue _value, $Res Function(ClearNewSentenceValue) _then)
+      : super(_value, (v) => _then(v as ClearNewSentenceValue));
+
+  @override
+  ClearNewSentenceValue get _value => super._value as ClearNewSentenceValue;
+}
+
+/// @nodoc
+
+class _$ClearNewSentenceValue implements ClearNewSentenceValue {
+  const _$ClearNewSentenceValue();
+
+  @override
+  String toString() {
+    return 'SentenceEvent.clearNewSentenceValue()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is ClearNewSentenceValue);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getAllSentences,
+    required TResult Function(Sentence sentence) showNewRandomSentence,
+    required TResult Function(Sentence sentence) addToFavourite,
+    required TResult Function(String value) newSentenceValueChanged,
+    required TResult Function() createNewSentence,
+    required TResult Function() reload,
+    required TResult Function() clearNewSentenceValue,
+    required TResult Function() reset,
+  }) {
+    return clearNewSentenceValue();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getAllSentences,
+    TResult Function(Sentence sentence)? showNewRandomSentence,
+    TResult Function(Sentence sentence)? addToFavourite,
+    TResult Function(String value)? newSentenceValueChanged,
+    TResult Function()? createNewSentence,
+    TResult Function()? reload,
+    TResult Function()? clearNewSentenceValue,
+    TResult Function()? reset,
+    required TResult orElse(),
+  }) {
+    if (clearNewSentenceValue != null) {
+      return clearNewSentenceValue();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetAllSentences value) getAllSentences,
+    required TResult Function(ShowNewRandomSentence value)
+        showNewRandomSentence,
+    required TResult Function(AddToFavourite value) addToFavourite,
+    required TResult Function(NewSentenceValueChanged value)
+        newSentenceValueChanged,
+    required TResult Function(CreateNewSentence value) createNewSentence,
+    required TResult Function(Reload value) reload,
+    required TResult Function(ClearNewSentenceValue value)
+        clearNewSentenceValue,
+    required TResult Function(Reset value) reset,
+  }) {
+    return clearNewSentenceValue(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetAllSentences value)? getAllSentences,
+    TResult Function(ShowNewRandomSentence value)? showNewRandomSentence,
+    TResult Function(AddToFavourite value)? addToFavourite,
+    TResult Function(NewSentenceValueChanged value)? newSentenceValueChanged,
+    TResult Function(CreateNewSentence value)? createNewSentence,
+    TResult Function(Reload value)? reload,
+    TResult Function(ClearNewSentenceValue value)? clearNewSentenceValue,
+    TResult Function(Reset value)? reset,
+    required TResult orElse(),
+  }) {
+    if (clearNewSentenceValue != null) {
+      return clearNewSentenceValue(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ClearNewSentenceValue implements SentenceEvent {
+  const factory ClearNewSentenceValue() = _$ClearNewSentenceValue;
+}
+
+/// @nodoc
+abstract class $ResetCopyWith<$Res> {
+  factory $ResetCopyWith(Reset value, $Res Function(Reset) then) =
+      _$ResetCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$ResetCopyWithImpl<$Res> extends _$SentenceEventCopyWithImpl<$Res>
+    implements $ResetCopyWith<$Res> {
+  _$ResetCopyWithImpl(Reset _value, $Res Function(Reset) _then)
+      : super(_value, (v) => _then(v as Reset));
+
+  @override
+  Reset get _value => super._value as Reset;
+}
+
+/// @nodoc
+
+class _$Reset implements Reset {
+  const _$Reset();
+
+  @override
+  String toString() {
+    return 'SentenceEvent.reset()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is Reset);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getAllSentences,
+    required TResult Function(Sentence sentence) showNewRandomSentence,
+    required TResult Function(Sentence sentence) addToFavourite,
+    required TResult Function(String value) newSentenceValueChanged,
+    required TResult Function() createNewSentence,
+    required TResult Function() reload,
+    required TResult Function() clearNewSentenceValue,
+    required TResult Function() reset,
+  }) {
+    return reset();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getAllSentences,
+    TResult Function(Sentence sentence)? showNewRandomSentence,
+    TResult Function(Sentence sentence)? addToFavourite,
+    TResult Function(String value)? newSentenceValueChanged,
+    TResult Function()? createNewSentence,
+    TResult Function()? reload,
+    TResult Function()? clearNewSentenceValue,
+    TResult Function()? reset,
+    required TResult orElse(),
+  }) {
+    if (reset != null) {
+      return reset();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetAllSentences value) getAllSentences,
+    required TResult Function(ShowNewRandomSentence value)
+        showNewRandomSentence,
+    required TResult Function(AddToFavourite value) addToFavourite,
+    required TResult Function(NewSentenceValueChanged value)
+        newSentenceValueChanged,
+    required TResult Function(CreateNewSentence value) createNewSentence,
+    required TResult Function(Reload value) reload,
+    required TResult Function(ClearNewSentenceValue value)
+        clearNewSentenceValue,
+    required TResult Function(Reset value) reset,
+  }) {
+    return reset(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetAllSentences value)? getAllSentences,
+    TResult Function(ShowNewRandomSentence value)? showNewRandomSentence,
+    TResult Function(AddToFavourite value)? addToFavourite,
+    TResult Function(NewSentenceValueChanged value)? newSentenceValueChanged,
+    TResult Function(CreateNewSentence value)? createNewSentence,
+    TResult Function(Reload value)? reload,
+    TResult Function(ClearNewSentenceValue value)? clearNewSentenceValue,
+    TResult Function(Reset value)? reset,
+    required TResult orElse(),
+  }) {
+    if (reset != null) {
+      return reset(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Reset implements SentenceEvent {
+  const factory Reset() = _$Reset;
+}
+
+/// @nodoc
 class _$SentenceStateTearOff {
   const _$SentenceStateTearOff();
 
@@ -711,12 +1134,22 @@ class _$SentenceStateTearOff {
       {required List<Sentence> sentences,
       required Sentence actualSentence,
       required bool didActualSentenceChange,
-      required String newSentenceValue}) {
+      required bool isLoading,
+      required String newSentenceValue,
+      required bool hasError,
+      required bool isRetryButtonClicked,
+      required String errorMessage,
+      required bool showSnackBar}) {
     return Initial(
       sentences: sentences,
       actualSentence: actualSentence,
       didActualSentenceChange: didActualSentenceChange,
+      isLoading: isLoading,
       newSentenceValue: newSentenceValue,
+      hasError: hasError,
+      isRetryButtonClicked: isRetryButtonClicked,
+      errorMessage: errorMessage,
+      showSnackBar: showSnackBar,
     );
   }
 }
@@ -729,19 +1162,40 @@ mixin _$SentenceState {
   List<Sentence> get sentences => throw _privateConstructorUsedError;
   Sentence get actualSentence => throw _privateConstructorUsedError;
   bool get didActualSentenceChange => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
   String get newSentenceValue => throw _privateConstructorUsedError;
+  bool get hasError => throw _privateConstructorUsedError;
+  bool get isRetryButtonClicked => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
+  bool get showSnackBar => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Sentence> sentences, Sentence actualSentence,
-            bool didActualSentenceChange, String newSentenceValue)
+    required TResult Function(
+            List<Sentence> sentences,
+            Sentence actualSentence,
+            bool didActualSentenceChange,
+            bool isLoading,
+            String newSentenceValue,
+            bool hasError,
+            bool isRetryButtonClicked,
+            String errorMessage,
+            bool showSnackBar)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Sentence> sentences, Sentence actualSentence,
-            bool didActualSentenceChange, String newSentenceValue)?
+    TResult Function(
+            List<Sentence> sentences,
+            Sentence actualSentence,
+            bool didActualSentenceChange,
+            bool isLoading,
+            String newSentenceValue,
+            bool hasError,
+            bool isRetryButtonClicked,
+            String errorMessage,
+            bool showSnackBar)?
         initial,
     required TResult orElse(),
   }) =>
@@ -772,7 +1226,12 @@ abstract class $SentenceStateCopyWith<$Res> {
       {List<Sentence> sentences,
       Sentence actualSentence,
       bool didActualSentenceChange,
-      String newSentenceValue});
+      bool isLoading,
+      String newSentenceValue,
+      bool hasError,
+      bool isRetryButtonClicked,
+      String errorMessage,
+      bool showSnackBar});
 }
 
 /// @nodoc
@@ -789,7 +1248,12 @@ class _$SentenceStateCopyWithImpl<$Res>
     Object? sentences = freezed,
     Object? actualSentence = freezed,
     Object? didActualSentenceChange = freezed,
+    Object? isLoading = freezed,
     Object? newSentenceValue = freezed,
+    Object? hasError = freezed,
+    Object? isRetryButtonClicked = freezed,
+    Object? errorMessage = freezed,
+    Object? showSnackBar = freezed,
   }) {
     return _then(_value.copyWith(
       sentences: sentences == freezed
@@ -804,10 +1268,30 @@ class _$SentenceStateCopyWithImpl<$Res>
           ? _value.didActualSentenceChange
           : didActualSentenceChange // ignore: cast_nullable_to_non_nullable
               as bool,
+      isLoading: isLoading == freezed
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       newSentenceValue: newSentenceValue == freezed
           ? _value.newSentenceValue
           : newSentenceValue // ignore: cast_nullable_to_non_nullable
               as String,
+      hasError: hasError == freezed
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRetryButtonClicked: isRetryButtonClicked == freezed
+          ? _value.isRetryButtonClicked
+          : isRetryButtonClicked // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      showSnackBar: showSnackBar == freezed
+          ? _value.showSnackBar
+          : showSnackBar // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -821,7 +1305,12 @@ abstract class $InitialCopyWith<$Res> implements $SentenceStateCopyWith<$Res> {
       {List<Sentence> sentences,
       Sentence actualSentence,
       bool didActualSentenceChange,
-      String newSentenceValue});
+      bool isLoading,
+      String newSentenceValue,
+      bool hasError,
+      bool isRetryButtonClicked,
+      String errorMessage,
+      bool showSnackBar});
 }
 
 /// @nodoc
@@ -838,7 +1327,12 @@ class _$InitialCopyWithImpl<$Res> extends _$SentenceStateCopyWithImpl<$Res>
     Object? sentences = freezed,
     Object? actualSentence = freezed,
     Object? didActualSentenceChange = freezed,
+    Object? isLoading = freezed,
     Object? newSentenceValue = freezed,
+    Object? hasError = freezed,
+    Object? isRetryButtonClicked = freezed,
+    Object? errorMessage = freezed,
+    Object? showSnackBar = freezed,
   }) {
     return _then(Initial(
       sentences: sentences == freezed
@@ -853,10 +1347,30 @@ class _$InitialCopyWithImpl<$Res> extends _$SentenceStateCopyWithImpl<$Res>
           ? _value.didActualSentenceChange
           : didActualSentenceChange // ignore: cast_nullable_to_non_nullable
               as bool,
+      isLoading: isLoading == freezed
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       newSentenceValue: newSentenceValue == freezed
           ? _value.newSentenceValue
           : newSentenceValue // ignore: cast_nullable_to_non_nullable
               as String,
+      hasError: hasError == freezed
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRetryButtonClicked: isRetryButtonClicked == freezed
+          ? _value.isRetryButtonClicked
+          : isRetryButtonClicked // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      showSnackBar: showSnackBar == freezed
+          ? _value.showSnackBar
+          : showSnackBar // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -868,7 +1382,12 @@ class _$Initial implements Initial {
       {required this.sentences,
       required this.actualSentence,
       required this.didActualSentenceChange,
-      required this.newSentenceValue});
+      required this.isLoading,
+      required this.newSentenceValue,
+      required this.hasError,
+      required this.isRetryButtonClicked,
+      required this.errorMessage,
+      required this.showSnackBar});
 
   @override
   final List<Sentence> sentences;
@@ -877,11 +1396,21 @@ class _$Initial implements Initial {
   @override
   final bool didActualSentenceChange;
   @override
+  final bool isLoading;
+  @override
   final String newSentenceValue;
+  @override
+  final bool hasError;
+  @override
+  final bool isRetryButtonClicked;
+  @override
+  final String errorMessage;
+  @override
+  final bool showSnackBar;
 
   @override
   String toString() {
-    return 'SentenceState.initial(sentences: $sentences, actualSentence: $actualSentence, didActualSentenceChange: $didActualSentenceChange, newSentenceValue: $newSentenceValue)';
+    return 'SentenceState.initial(sentences: $sentences, actualSentence: $actualSentence, didActualSentenceChange: $didActualSentenceChange, isLoading: $isLoading, newSentenceValue: $newSentenceValue, hasError: $hasError, isRetryButtonClicked: $isRetryButtonClicked, errorMessage: $errorMessage, showSnackBar: $showSnackBar)';
   }
 
   @override
@@ -898,9 +1427,24 @@ class _$Initial implements Initial {
                     other.didActualSentenceChange, didActualSentenceChange) ||
                 const DeepCollectionEquality().equals(
                     other.didActualSentenceChange, didActualSentenceChange)) &&
+            (identical(other.isLoading, isLoading) ||
+                const DeepCollectionEquality()
+                    .equals(other.isLoading, isLoading)) &&
             (identical(other.newSentenceValue, newSentenceValue) ||
                 const DeepCollectionEquality()
-                    .equals(other.newSentenceValue, newSentenceValue)));
+                    .equals(other.newSentenceValue, newSentenceValue)) &&
+            (identical(other.hasError, hasError) ||
+                const DeepCollectionEquality()
+                    .equals(other.hasError, hasError)) &&
+            (identical(other.isRetryButtonClicked, isRetryButtonClicked) ||
+                const DeepCollectionEquality().equals(
+                    other.isRetryButtonClicked, isRetryButtonClicked)) &&
+            (identical(other.errorMessage, errorMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.errorMessage, errorMessage)) &&
+            (identical(other.showSnackBar, showSnackBar) ||
+                const DeepCollectionEquality()
+                    .equals(other.showSnackBar, showSnackBar)));
   }
 
   @override
@@ -909,7 +1453,12 @@ class _$Initial implements Initial {
       const DeepCollectionEquality().hash(sentences) ^
       const DeepCollectionEquality().hash(actualSentence) ^
       const DeepCollectionEquality().hash(didActualSentenceChange) ^
-      const DeepCollectionEquality().hash(newSentenceValue);
+      const DeepCollectionEquality().hash(isLoading) ^
+      const DeepCollectionEquality().hash(newSentenceValue) ^
+      const DeepCollectionEquality().hash(hasError) ^
+      const DeepCollectionEquality().hash(isRetryButtonClicked) ^
+      const DeepCollectionEquality().hash(errorMessage) ^
+      const DeepCollectionEquality().hash(showSnackBar);
 
   @JsonKey(ignore: true)
   @override
@@ -919,25 +1468,57 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Sentence> sentences, Sentence actualSentence,
-            bool didActualSentenceChange, String newSentenceValue)
+    required TResult Function(
+            List<Sentence> sentences,
+            Sentence actualSentence,
+            bool didActualSentenceChange,
+            bool isLoading,
+            String newSentenceValue,
+            bool hasError,
+            bool isRetryButtonClicked,
+            String errorMessage,
+            bool showSnackBar)
         initial,
   }) {
     return initial(
-        sentences, actualSentence, didActualSentenceChange, newSentenceValue);
+        sentences,
+        actualSentence,
+        didActualSentenceChange,
+        isLoading,
+        newSentenceValue,
+        hasError,
+        isRetryButtonClicked,
+        errorMessage,
+        showSnackBar);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Sentence> sentences, Sentence actualSentence,
-            bool didActualSentenceChange, String newSentenceValue)?
+    TResult Function(
+            List<Sentence> sentences,
+            Sentence actualSentence,
+            bool didActualSentenceChange,
+            bool isLoading,
+            String newSentenceValue,
+            bool hasError,
+            bool isRetryButtonClicked,
+            String errorMessage,
+            bool showSnackBar)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
       return initial(
-          sentences, actualSentence, didActualSentenceChange, newSentenceValue);
+          sentences,
+          actualSentence,
+          didActualSentenceChange,
+          isLoading,
+          newSentenceValue,
+          hasError,
+          isRetryButtonClicked,
+          errorMessage,
+          showSnackBar);
     }
     return orElse();
   }
@@ -968,7 +1549,12 @@ abstract class Initial implements SentenceState {
       {required List<Sentence> sentences,
       required Sentence actualSentence,
       required bool didActualSentenceChange,
-      required String newSentenceValue}) = _$Initial;
+      required bool isLoading,
+      required String newSentenceValue,
+      required bool hasError,
+      required bool isRetryButtonClicked,
+      required String errorMessage,
+      required bool showSnackBar}) = _$Initial;
 
   @override
   List<Sentence> get sentences => throw _privateConstructorUsedError;
@@ -977,7 +1563,17 @@ abstract class Initial implements SentenceState {
   @override
   bool get didActualSentenceChange => throw _privateConstructorUsedError;
   @override
+  bool get isLoading => throw _privateConstructorUsedError;
+  @override
   String get newSentenceValue => throw _privateConstructorUsedError;
+  @override
+  bool get hasError => throw _privateConstructorUsedError;
+  @override
+  bool get isRetryButtonClicked => throw _privateConstructorUsedError;
+  @override
+  String get errorMessage => throw _privateConstructorUsedError;
+  @override
+  bool get showSnackBar => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   $InitialCopyWith<Initial> get copyWith => throw _privateConstructorUsedError;

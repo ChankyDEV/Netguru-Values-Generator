@@ -73,16 +73,12 @@ class Utils {
                   ),
                 ),
                 Expanded(
-                  child: TextButton(
-                    onPressed: onAdd,
-                    child: ScaledText(
-                      scale: 1.7,
-                      value: 'Add',
-                      align: TextAlign.center,
-                      style: TextStyle(color: ColorUtils.of(context).accent),
-                    ),
-                  ),
-                ),
+                    child: buildButton(
+                  context,
+                  title: 'Add',
+                  isButtonClicked: false,
+                  onTap: onAdd,
+                )),
                 Expanded(child: const SizedBox()),
               ],
             ),
@@ -171,6 +167,73 @@ class Utils {
           ),
         ],
       ),
+    );
+  }
+
+  static Widget buildButton(
+    BuildContext context, {
+    required String title,
+    required bool isButtonClicked,
+    required VoidCallback onTap,
+  }) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return GestureDetector(
+      onTap: isButtonClicked ? () {} : onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        alignment: Alignment.center,
+        width: width * 0.4,
+        height: height * 0.065,
+        child: Text(
+          title,
+          style: TextStyle(
+            color: ColorUtils.of(context).text,
+          ),
+        ),
+        decoration: BoxDecoration(
+          color: isButtonClicked
+              ? ColorUtils.of(context).background
+              : ColorUtils.of(context).accent,
+          border: Border.all(
+            color: ColorUtils.of(context).accent,
+            width: isButtonClicked ? 2.0 : 0.0,
+          ),
+          borderRadius: BorderRadius.circular(6.0),
+        ),
+      ),
+    );
+  }
+
+  static SnackBar snackBar(
+    BuildContext context, {
+    required String errorMessage,
+    double widthPercentage = 0.8,
+    double heightPercentage = 0.08,
+    Duration duration = const Duration(milliseconds: 3500),
+  }) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return SnackBar(
+      backgroundColor: Colors.transparent,
+      behavior: SnackBarBehavior.fixed,
+      content: Container(
+        alignment: Alignment.center,
+        width: width * widthPercentage,
+        height: height * heightPercentage,
+        child: ScaledText(
+          value: errorMessage,
+          align: TextAlign.center,
+          scale: 1.7,
+        ),
+        decoration: BoxDecoration(
+          color: ColorUtils.of(context).red,
+          border: Border.all(color: ColorUtils.of(context).text, width: 1.0),
+          borderRadius: BorderRadius.circular(6.0),
+        ),
+      ),
+      elevation: 0.0,
+      duration: duration,
     );
   }
 }

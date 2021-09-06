@@ -153,10 +153,14 @@ abstract class ConfigureApp implements InitializationEvent {
 class _$InitializationStateTearOff {
   const _$InitializationStateTearOff();
 
-  Initial initial({required bool isLoading, required bool didConfigureApp}) {
+  Initial initial(
+      {required bool isLoading,
+      required bool didConfigureApp,
+      required bool hasError}) {
     return Initial(
       isLoading: isLoading,
       didConfigureApp: didConfigureApp,
+      hasError: hasError,
     );
   }
 }
@@ -168,15 +172,19 @@ const $InitializationState = _$InitializationStateTearOff();
 mixin _$InitializationState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get didConfigureApp => throw _privateConstructorUsedError;
+  bool get hasError => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isLoading, bool didConfigureApp) initial,
+    required TResult Function(
+            bool isLoading, bool didConfigureApp, bool hasError)
+        initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isLoading, bool didConfigureApp)? initial,
+    TResult Function(bool isLoading, bool didConfigureApp, bool hasError)?
+        initial,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -202,7 +210,7 @@ abstract class $InitializationStateCopyWith<$Res> {
   factory $InitializationStateCopyWith(
           InitializationState value, $Res Function(InitializationState) then) =
       _$InitializationStateCopyWithImpl<$Res>;
-  $Res call({bool isLoading, bool didConfigureApp});
+  $Res call({bool isLoading, bool didConfigureApp, bool hasError});
 }
 
 /// @nodoc
@@ -218,6 +226,7 @@ class _$InitializationStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = freezed,
     Object? didConfigureApp = freezed,
+    Object? hasError = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: isLoading == freezed
@@ -227,6 +236,10 @@ class _$InitializationStateCopyWithImpl<$Res>
       didConfigureApp: didConfigureApp == freezed
           ? _value.didConfigureApp
           : didConfigureApp // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: hasError == freezed
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -238,7 +251,7 @@ abstract class $InitialCopyWith<$Res>
   factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
       _$InitialCopyWithImpl<$Res>;
   @override
-  $Res call({bool isLoading, bool didConfigureApp});
+  $Res call({bool isLoading, bool didConfigureApp, bool hasError});
 }
 
 /// @nodoc
@@ -255,6 +268,7 @@ class _$InitialCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = freezed,
     Object? didConfigureApp = freezed,
+    Object? hasError = freezed,
   }) {
     return _then(Initial(
       isLoading: isLoading == freezed
@@ -265,6 +279,10 @@ class _$InitialCopyWithImpl<$Res>
           ? _value.didConfigureApp
           : didConfigureApp // ignore: cast_nullable_to_non_nullable
               as bool,
+      hasError: hasError == freezed
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -272,16 +290,21 @@ class _$InitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Initial implements Initial {
-  const _$Initial({required this.isLoading, required this.didConfigureApp});
+  const _$Initial(
+      {required this.isLoading,
+      required this.didConfigureApp,
+      required this.hasError});
 
   @override
   final bool isLoading;
   @override
   final bool didConfigureApp;
+  @override
+  final bool hasError;
 
   @override
   String toString() {
-    return 'InitializationState.initial(isLoading: $isLoading, didConfigureApp: $didConfigureApp)';
+    return 'InitializationState.initial(isLoading: $isLoading, didConfigureApp: $didConfigureApp, hasError: $hasError)';
   }
 
   @override
@@ -293,14 +316,18 @@ class _$Initial implements Initial {
                     .equals(other.isLoading, isLoading)) &&
             (identical(other.didConfigureApp, didConfigureApp) ||
                 const DeepCollectionEquality()
-                    .equals(other.didConfigureApp, didConfigureApp)));
+                    .equals(other.didConfigureApp, didConfigureApp)) &&
+            (identical(other.hasError, hasError) ||
+                const DeepCollectionEquality()
+                    .equals(other.hasError, hasError)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(isLoading) ^
-      const DeepCollectionEquality().hash(didConfigureApp);
+      const DeepCollectionEquality().hash(didConfigureApp) ^
+      const DeepCollectionEquality().hash(hasError);
 
   @JsonKey(ignore: true)
   @override
@@ -310,19 +337,22 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isLoading, bool didConfigureApp) initial,
+    required TResult Function(
+            bool isLoading, bool didConfigureApp, bool hasError)
+        initial,
   }) {
-    return initial(isLoading, didConfigureApp);
+    return initial(isLoading, didConfigureApp, hasError);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isLoading, bool didConfigureApp)? initial,
+    TResult Function(bool isLoading, bool didConfigureApp, bool hasError)?
+        initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(isLoading, didConfigureApp);
+      return initial(isLoading, didConfigureApp, hasError);
     }
     return orElse();
   }
@@ -350,12 +380,16 @@ class _$Initial implements Initial {
 
 abstract class Initial implements InitializationState {
   const factory Initial(
-      {required bool isLoading, required bool didConfigureApp}) = _$Initial;
+      {required bool isLoading,
+      required bool didConfigureApp,
+      required bool hasError}) = _$Initial;
 
   @override
   bool get isLoading => throw _privateConstructorUsedError;
   @override
   bool get didConfigureApp => throw _privateConstructorUsedError;
+  @override
+  bool get hasError => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   $InitialCopyWith<Initial> get copyWith => throw _privateConstructorUsedError;

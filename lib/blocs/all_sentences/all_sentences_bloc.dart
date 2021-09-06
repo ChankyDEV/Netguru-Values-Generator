@@ -18,22 +18,22 @@ class AllSentencesBloc extends Bloc<AllSentencesEvent, AllSentencesState> {
   ) : super(
           AllSentencesState.initial(
             sentences: <Sentence>[],
-            hasErrors: false,
+            hasError: false,
             isLoading: true,
+            isRetryButtonClicked: false,
           ),
         );
 
   @override
   Stream<AllSentencesState> mapEventToState(AllSentencesEvent event) async* {
-    yield* event.map(getAllSentences: _getAllSentences);
+    yield* event.map(
+      getAllSentences: _getAllSentences,
+      reload: _reload,
+    );
   }
 
   Stream<AllSentencesState> _getAllSentences(GetAllSentences value) async* {
-    final failureOrSentences = await _sentenceService.getAllSentences();
-    yield failureOrSentences.fold<AllSentencesState>(
-      (l) => _showError(l),
-      (r) => _showAllSentences(r),
-    );
+    yield* allCategories();
   }
 
   void getAllSentences() {
@@ -52,12 +52,33 @@ class AllSentencesBloc extends Bloc<AllSentencesEvent, AllSentencesState> {
   AllSentencesState _showError(Failure f) {
     return state.copyWith(
       isLoading: false,
-      hasErrors: true,
+      hasError: true,
     );
   }
 
   @override
   Future<void> close() {
     return super.close();
+  }
+
+  Stream<AllSentencesState> _reload(Reload value) async* {
+    yield _tapOrReleaseRetryButton();
+    await Future.delayed(const Duration(seconds: 2));
+    yield* allCategories();
+    yield _tapOrReleaseRetryButton();
+  }
+
+  Stream<AllSentencesState> allCategories() async* {
+    final failureOrSentences = await _sentenceService.getAllSentences();
+    yield failureOrSentences.fold<AllSentencesState>(
+      (l) => _showError(l),
+      (r) => _showAllSentences(r),
+    );
+  }
+
+  AllSentencesState _tapOrReleaseRetryButton() {
+    return state.copyWith(
+      isRetryButtonClicked: !state.isRetryButtonClicked,
+    );
   }
 }

@@ -156,11 +156,13 @@ class _$FavouriteStateTearOff {
   Initial initial(
       {required List<Sentence> favourites,
       required bool hasError,
-      required bool isLoading}) {
+      required bool isLoading,
+      required String errorMessage}) {
     return Initial(
       favourites: favourites,
       hasError: hasError,
       isLoading: isLoading,
+      errorMessage: errorMessage,
     );
   }
 }
@@ -173,17 +175,19 @@ mixin _$FavouriteState {
   List<Sentence> get favourites => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Sentence> favourites, bool hasError, bool isLoading)
+    required TResult Function(List<Sentence> favourites, bool hasError,
+            bool isLoading, String errorMessage)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Sentence> favourites, bool hasError, bool isLoading)?
+    TResult Function(List<Sentence> favourites, bool hasError, bool isLoading,
+            String errorMessage)?
         initial,
     required TResult orElse(),
   }) =>
@@ -210,7 +214,11 @@ abstract class $FavouriteStateCopyWith<$Res> {
   factory $FavouriteStateCopyWith(
           FavouriteState value, $Res Function(FavouriteState) then) =
       _$FavouriteStateCopyWithImpl<$Res>;
-  $Res call({List<Sentence> favourites, bool hasError, bool isLoading});
+  $Res call(
+      {List<Sentence> favourites,
+      bool hasError,
+      bool isLoading,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -227,6 +235,7 @@ class _$FavouriteStateCopyWithImpl<$Res>
     Object? favourites = freezed,
     Object? hasError = freezed,
     Object? isLoading = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
       favourites: favourites == freezed
@@ -241,6 +250,10 @@ class _$FavouriteStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -250,7 +263,11 @@ abstract class $InitialCopyWith<$Res> implements $FavouriteStateCopyWith<$Res> {
   factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
       _$InitialCopyWithImpl<$Res>;
   @override
-  $Res call({List<Sentence> favourites, bool hasError, bool isLoading});
+  $Res call(
+      {List<Sentence> favourites,
+      bool hasError,
+      bool isLoading,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -267,6 +284,7 @@ class _$InitialCopyWithImpl<$Res> extends _$FavouriteStateCopyWithImpl<$Res>
     Object? favourites = freezed,
     Object? hasError = freezed,
     Object? isLoading = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(Initial(
       favourites: favourites == freezed
@@ -281,6 +299,10 @@ class _$InitialCopyWithImpl<$Res> extends _$FavouriteStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -291,7 +313,8 @@ class _$Initial implements Initial {
   const _$Initial(
       {required this.favourites,
       required this.hasError,
-      required this.isLoading});
+      required this.isLoading,
+      required this.errorMessage});
 
   @override
   final List<Sentence> favourites;
@@ -299,10 +322,12 @@ class _$Initial implements Initial {
   final bool hasError;
   @override
   final bool isLoading;
+  @override
+  final String errorMessage;
 
   @override
   String toString() {
-    return 'FavouriteState.initial(favourites: $favourites, hasError: $hasError, isLoading: $isLoading)';
+    return 'FavouriteState.initial(favourites: $favourites, hasError: $hasError, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -317,7 +342,10 @@ class _$Initial implements Initial {
                     .equals(other.hasError, hasError)) &&
             (identical(other.isLoading, isLoading) ||
                 const DeepCollectionEquality()
-                    .equals(other.isLoading, isLoading)));
+                    .equals(other.isLoading, isLoading)) &&
+            (identical(other.errorMessage, errorMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.errorMessage, errorMessage)));
   }
 
   @override
@@ -325,7 +353,8 @@ class _$Initial implements Initial {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(favourites) ^
       const DeepCollectionEquality().hash(hasError) ^
-      const DeepCollectionEquality().hash(isLoading);
+      const DeepCollectionEquality().hash(isLoading) ^
+      const DeepCollectionEquality().hash(errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -335,22 +364,23 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<Sentence> favourites, bool hasError, bool isLoading)
+    required TResult Function(List<Sentence> favourites, bool hasError,
+            bool isLoading, String errorMessage)
         initial,
   }) {
-    return initial(favourites, hasError, isLoading);
+    return initial(favourites, hasError, isLoading, errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Sentence> favourites, bool hasError, bool isLoading)?
+    TResult Function(List<Sentence> favourites, bool hasError, bool isLoading,
+            String errorMessage)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(favourites, hasError, isLoading);
+      return initial(favourites, hasError, isLoading, errorMessage);
     }
     return orElse();
   }
@@ -380,7 +410,8 @@ abstract class Initial implements FavouriteState {
   const factory Initial(
       {required List<Sentence> favourites,
       required bool hasError,
-      required bool isLoading}) = _$Initial;
+      required bool isLoading,
+      required String errorMessage}) = _$Initial;
 
   @override
   List<Sentence> get favourites => throw _privateConstructorUsedError;
@@ -388,6 +419,8 @@ abstract class Initial implements FavouriteState {
   bool get hasError => throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;
+  @override
+  String get errorMessage => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   $InitialCopyWith<Initial> get copyWith => throw _privateConstructorUsedError;

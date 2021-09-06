@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netguru_values_generator/blocs/sentence/sentence_bloc.dart';
 import 'package:netguru_values_generator/screens/color_utils.dart';
+import 'package:netguru_values_generator/screens/core/error_screen.dart';
+import 'package:netguru_values_generator/screens/core/loading_screen.dart';
 import 'package:netguru_values_generator/screens/core/scaled_container.dart';
 import 'package:netguru_values_generator/screens/core/scaled_icon.dart';
 import 'package:netguru_values_generator/screens/core/scaled_text.dart';
@@ -13,45 +15,69 @@ class SentencesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SentenceBloc, SentenceState>(
-      builder: (BuildContext context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: ScaledText(
-              value: 'Generator',
-              scale: 2.2,
-            ),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                onPressed: () => BlocProvider.of<SentenceBloc>(context).add(
-                  SentenceEvent.addToFavourite(state.actualSentence),
-                ),
-                icon: ScaledIcon(
-                  scale: 2,
-                  icon: Icons.favorite,
-                  color: state.actualSentence.isFavourite
-                      ? ColorUtils.of(context).red
-                      : ColorUtils.of(context).background,
-                ),
-              )
-            ],
-          ),
-          body: hasLoadedSentences(state)
-              ? Stack(
-                  children: [
-                    _buildContent(
+    return Scaffold(
+      body: BlocConsumer<SentenceBloc, SentenceState>(
+        listenWhen: (previous, current) =>
+            previous.showSnackBar != current.showSnackBar,
+        listener: (context, state) {
+          if (state.showSnackBar) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              Utils.snackBar(
+                context,
+                errorMessage: state.errorMessage,
+              ),
+            );
+            BlocProvider.of<SentenceBloc>(context).add(SentenceEvent.reset());
+          }
+        },
+        builder: (BuildContext context, state) {
+          return state.isLoading
+              ? LoadingScreen()
+              : state.hasError
+                  ? _showErrorScreen(
                       context,
-                      state.actualSentence.value,
-                    ),
-                    _buildActions(context, state),
-                  ],
-                )
-              : Center(
-                  child: CircularProgressIndicator(),
-                ),
-        );
-      },
+                      state.isRetryButtonClicked,
+                    )
+                  : Scaffold(
+                      appBar: AppBar(
+                        title: ScaledText(
+                          value: 'Generator',
+                          scale: 2.2,
+                        ),
+                        centerTitle: true,
+                        actions: [
+                          IconButton(
+                            onPressed: () =>
+                                BlocProvider.of<SentenceBloc>(context).add(
+                              SentenceEvent.addToFavourite(
+                                  state.actualSentence),
+                            ),
+                            icon: ScaledIcon(
+                              scale: 2,
+                              icon: Icons.favorite,
+                              color: state.actualSentence.isFavourite
+                                  ? ColorUtils.of(context).red
+                                  : ColorUtils.of(context).background,
+                            ),
+                          )
+                        ],
+                      ),
+                      body: hasLoadedSentences(state)
+                          ? Stack(
+                              children: [
+                                _buildContent(
+                                  context,
+                                  state.actualSentence.value,
+                                ),
+                                _buildActions(context, state),
+                              ],
+                            )
+                          : Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                    );
+        },
+      ),
     );
   }
 
@@ -201,6 +227,30 @@ class SentencesScreen extends StatelessWidget {
         scale: 2.2,
         align: TextAlign.center,
       ),
+    );
+  }
+
+  Widget _showErrorScreen(BuildContext context, bool isRetryButtonClicked) {
+    return ErrorScreen(
+      information: 'We can\'t show you generated sentences :(',
+      isRetryButtonClicked: isRetryButtonClicked,
+      onRetryButtonClick: () => getAll(context),
+      child: ScaledContainer(
+        scale: 0.4,
+        color: ColorUtils.of(context).red,
+        shape: BoxShape.circle,
+        child: ScaledIcon(
+          scale: 8,
+          icon: Icons.cancel_outlined,
+          color: ColorUtils.of(context).background,
+        ),
+      ),
+    );
+  }
+
+  void getAll(BuildContext context) {
+    BlocProvider.of<SentenceBloc>(context).add(
+      SentenceEvent.reload(),
     );
   }
 }
