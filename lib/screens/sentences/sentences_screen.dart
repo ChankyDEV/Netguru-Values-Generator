@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:netguru_values_generator/blocs/sentence/sentence_bloc.dart';
 import 'package:netguru_values_generator/screens/color_utils.dart';
 import 'package:netguru_values_generator/screens/core/error_screen.dart';
@@ -41,7 +42,8 @@ class SentencesScreen extends StatelessWidget {
                   : Scaffold(
                       appBar: AppBar(
                         title: ScaledText(
-                          value: 'Generator',
+                          value: AppLocalizations.of(context)!
+                              .generatorScreenHeader,
                           scale: 2.2,
                         ),
                         centerTitle: true,
@@ -142,7 +144,7 @@ class SentencesScreen extends StatelessWidget {
                         context,
                         icon: Icons.format_quote_rounded,
                         iconScale: 2.9,
-                        label: 'All',
+                        label: AppLocalizations.of(context)!.allSentencesHeader,
                         labelScale: 1.4,
                         onTap: () => Navigator.of(context).pushNamed(
                           Screens.allSentences,
@@ -155,12 +157,13 @@ class SentencesScreen extends StatelessWidget {
                         context,
                         icon: Icons.add,
                         iconScale: 2.9,
-                        label: 'Add',
+                        label: AppLocalizations.of(context)!.addBottomTabLabel,
                         labelScale: 1.4,
                         onTap: () => Utils.showTextFieldDialog(
                           context,
-                          header: 'Add new sentence',
-                          hint: 'Sentence',
+                          header:
+                              AppLocalizations.of(context)!.allSentencesHeader,
+                          hint: AppLocalizations.of(context)!.hintValue,
                           onChange: (value) {
                             BlocProvider.of<SentenceBloc>(context).add(
                               SentenceEvent.newSentenceValueChanged(value),
@@ -180,7 +183,8 @@ class SentencesScreen extends StatelessWidget {
                         context,
                         icon: Icons.favorite,
                         iconScale: 2.8,
-                        label: 'Favourite',
+                        label: AppLocalizations.of(context)!
+                            .favouriteBottomTabLabel,
                         labelScale: 1.4,
                         onTap: () =>
                             Navigator.of(context).pushNamed(Screens.favourites),
@@ -232,7 +236,8 @@ class SentencesScreen extends StatelessWidget {
 
   Widget _showErrorScreen(BuildContext context, bool isRetryButtonClicked) {
     return ErrorScreen(
-      information: 'We can\'t show you generated sentences :(',
+      information:
+          AppLocalizations.of(context)!.cantGetGeneratedSentencesErrorMessage,
       isRetryButtonClicked: isRetryButtonClicked,
       onRetryButtonClick: () => getAll(context),
       child: ScaledContainer(

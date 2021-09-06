@@ -9,6 +9,7 @@ import 'package:netguru_values_generator/screens/core/loading_screen.dart';
 import 'package:netguru_values_generator/screens/core/scaled_container.dart';
 import 'package:netguru_values_generator/screens/core/scaled_icon.dart';
 import 'package:netguru_values_generator/screens/core/scaled_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AllSentencesScreen extends StatelessWidget {
   const AllSentencesScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class AllSentencesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: ScaledText(
-          value: 'All sentences',
+          value: AppLocalizations.of(context)!.allSentencesHeader,
           scale: 1.7,
         ),
         iconTheme: IconThemeData(
@@ -75,7 +76,7 @@ class AllSentencesScreen extends StatelessWidget {
     bool isRetryButtonClicked,
   ) {
     return ErrorScreen(
-      information: 'We can\'t show you all sentences :(',
+      information: AppLocalizations.of(context)!.cantShowAllSentences,
       isRetryButtonClicked: isRetryButtonClicked,
       onRetryButtonClick: () => getFavourites(context),
       child: ScaledContainer(

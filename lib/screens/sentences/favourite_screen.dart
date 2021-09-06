@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:netguru_values_generator/blocs/favourites/favourite_bloc.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/screens/color_utils.dart';
@@ -18,7 +19,7 @@ class FavouritesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: ScaledText(
-          value: 'Favourites',
+          value: AppLocalizations.of(context)!.favouritesHeader,
           scale: 1.7,
         ),
         iconTheme: IconThemeData(
@@ -49,8 +50,8 @@ class FavouritesScreen extends StatelessWidget {
     bool isRetryButtonClicked,
   ) {
     final msg = errorMessage == SentenceErrorMessages.noFavouriteSentences
-        ? 'No favourites here :/'
-        : 'Somehow we can\'t get your favourites';
+        ? AppLocalizations.of(context)!.noFavouriteErrorMessage
+        : AppLocalizations.of(context)!.unexpectedCantGetFavourites;
     final icon = errorMessage == SentenceErrorMessages.noFavouriteSentences
         ? Icons.favorite_outline
         : Icons.cancel_outlined;

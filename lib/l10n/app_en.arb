@@ -1,0 +1,62 @@
+{
+  "title": "Netguru generator",
+  "@title": {
+    "description": "Title of the app"
+  },
+  "cantShowAllSentences": "We can\\'t show you all sentences :(",
+  "@cantShowAllSentences": {
+    "description": "Error message when cant get messages"
+  },
+  "allSentencesHeader": "All sentences",
+  "@allSentencesHeader": {
+    "description": "All sentences header"
+  },
+  "retryButtonLabel": "Retry",
+  "@retryButtonLabel": {
+    "description": "Retry button label"
+  },
+  "loadingLabel": "Loading...",
+  "@loadingLabel": {
+    "description": "Loading lebel"
+  },
+  "favouritesHeader": "Favourites",
+  "@favouritesHeader": {
+    "description": "Favourites header"
+  },
+  "noFavouriteErrorMessage": "No favourites here :/",
+  "@noFavouriteErrorMessage": {
+    "description": "Error message while no favourites"
+  },
+  "unexpectedCantGetFavourites": "Somehow we can\\'t get your favourites",
+  "@unexpectedCantGetFavourites": {
+    "description": "Error message while no favourites but dont know why"
+  },
+  "generatorScreenHeader": "Generator",
+  "@generatorScreenHeader": {
+    "description": "Generator screen header"
+  },
+  "allBottomTabLabel": "All",
+  "@allBottomTabLabel": {
+    "description": "All bottom tab label"
+  },
+  "addBottomTabLabel": "Add",
+  "@addBottomTabLabel": {
+    "description": "Add bottom tab label"
+  },
+  "favouriteBottomTabLabel": "Favourite",
+  "@favouriteBottomTabLabel": {
+    "description": "Favourite bottom tab label"
+  },
+  "dialogHeader": "Add new sentence",
+  "@dialogHeader": {
+    "description": "Dialog header"
+  },
+  "hintValue": "Sentence",
+  "@hintValue": {
+    "description": "Hint value"
+  },
+  "cantGetGeneratedSentencesErrorMessage": "We can\\'t show you generated sentences :(",
+  "@cantGetGeneratedSentencesErrorMessage": {
+    "description": "Error message when user dont get generated sentences"
+  }
+}

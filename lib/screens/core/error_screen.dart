@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:netguru_values_generator/screens/core/scaled_text.dart';
 
 import '../utils.dart';
@@ -47,10 +48,12 @@ class ErrorScreen extends StatelessWidget {
                     height: 40,
                   ),
                   showButton
-                      ? Utils.buildButton(context,
+                      ? Utils.buildButton(
+                          context,
                           isButtonClicked: isRetryButtonClicked,
                           onTap: onRetryButtonClick,
-                          title: 'Retry')
+                          title: AppLocalizations.of(context)!.retryButtonLabel,
+                        )
                       : const SizedBox(),
                 ],
               )),

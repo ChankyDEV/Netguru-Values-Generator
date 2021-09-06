@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:netguru_values_generator/screens/color_utils.dart';
 import 'package:netguru_values_generator/screens/core/scaled_text.dart';
 
@@ -17,9 +18,11 @@ class LoadingScreen extends StatelessWidget {
               backgroundColor: ColorUtils.of(context).background,
               color: ColorUtils.of(context).accent,
             ),
-            const SizedBox(height: 40,),
+            const SizedBox(
+              height: 40,
+            ),
             ScaledText(
-              value: 'Loading...',
+              value: AppLocalizations.of(context)!.loadingLabel,
               scale: 3,
               align: TextAlign.center,
             ),
