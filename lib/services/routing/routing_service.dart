@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:netguru_values_generator/blocs/all_sentences/all_sentences_bloc.dart';
 import 'package:netguru_values_generator/blocs/favourites/favourite_bloc.dart';
@@ -66,7 +67,7 @@ class RoutingService {
   MaterialPageRoute error() {
     return MaterialPageRoute(
       builder: (context) => ErrorScreen(
-        information: 'Something goes wrong, please reinstall the app',
+        information: AppLocalizations.of(context)!.initialDataError,
         child: ScaledContainer(
           scale: 0.4,
           color: ColorUtils.of(context).red,

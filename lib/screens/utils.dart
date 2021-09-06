@@ -16,10 +16,11 @@ class Utils {
 
   static void showTextFieldDialog(
     BuildContext context, {
-    required Function(String) onChange,
+    required Function(String) onTextChange,
     required VoidCallback onAdd,
     required String hint,
     required String header,
+    required String buttonLabel,
   }) =>
       showDialog(
         context: context,
@@ -29,7 +30,8 @@ class Utils {
             context,
             header,
             hint,
-            onChange,
+            buttonLabel,
+            onTextChange,
             onAdd,
           ),
         ),
@@ -39,7 +41,8 @@ class Utils {
     BuildContext context,
     String header,
     String hint,
-    Function(String) onChange,
+    String buttonLabel,
+    Function(String) onTextChange,
     VoidCallback onAdd,
   ) {
     return Center(
@@ -67,7 +70,7 @@ class Utils {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: customTextField(
                       context,
-                      onChange: onChange,
+                      onChange: onTextChange,
                       hint: hint,
                     ),
                   ),
@@ -75,7 +78,7 @@ class Utils {
                 Expanded(
                     child: buildButton(
                   context,
-                  title: 'Add',
+                  title: buttonLabel,
                   isButtonClicked: false,
                   onTap: onAdd,
                 )),

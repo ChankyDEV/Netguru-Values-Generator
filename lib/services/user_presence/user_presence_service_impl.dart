@@ -36,7 +36,9 @@ class UserPresenceServiceImpl implements UserPresenceService {
       }
       return right(unit);
     } on UserPresenceException catch (e) {
-      return left(Failure(e.message));
+      return left(
+        Failure(e.message),
+      );
     } on SentenceException {
       return left(
         const Failure(

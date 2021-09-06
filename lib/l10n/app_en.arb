@@ -58,5 +58,13 @@
   "cantGetGeneratedSentencesErrorMessage": "We can\\'t show you generated sentences :(",
   "@cantGetGeneratedSentencesErrorMessage": {
     "description": "Error message when user dont get generated sentences"
+  },
+  "addButtonLabel": "Add",
+  "@addButtonLabel": {
+    "description": "Add button label"
+  },
+  "initialDataError": "Something goes wrong, please reinstall the app",
+  "@initialDataError": {
+    "description": "Cant load initial data"
   }
 }

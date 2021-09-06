@@ -30,8 +30,11 @@ class SentenceRepositoryImpl implements SentenceRepository {
   Future<List<SentenceDTO>> getFavouriteSentences() {
     _sentences = _getAllSentences();
     if (_sentences.isNotEmpty) {
-      final favourites =
-          _sentences.where((sentence) => sentence.isFavourite).toList();
+      final favourites = _sentences
+          .where(
+            (sentence) => sentence.isFavourite,
+          )
+          .toList();
       if (favourites.isNotEmpty) {
         return Future.value(favourites);
       } else {
@@ -65,7 +68,9 @@ class SentenceRepositoryImpl implements SentenceRepository {
     final sentencesList = json.decode(dataString) as List<dynamic>;
     final sentences = <T>[];
     sentencesList.forEach((sentenceMap) {
-      sentences.add(onConversion(sentenceMap));
+      sentences.add(
+        onConversion(sentenceMap),
+      );
     });
     return sentences;
   }
@@ -80,13 +85,15 @@ class SentenceRepositoryImpl implements SentenceRepository {
         if (existingSentence != null) {
           return await _updateSentence(
             sentence,
-            uid: existingSentence.uid,
+            uidToUpdate: existingSentence.uid,
           );
         } else {
           return await _addNewSentence(sentence);
         }
       } else {
-        throw SentenceException(message: SentenceErrorMessages.noSentences);
+        throw SentenceException(
+          message: SentenceErrorMessages.noSentences,
+        );
       }
     } else {
       throw SentenceException(
@@ -97,9 +104,11 @@ class SentenceRepositoryImpl implements SentenceRepository {
 
   Future<SentenceDTO> _updateSentence(
     SentenceDTO sentence, {
-    required String uid,
+    required String uidToUpdate,
   }) async {
-    final index = _sentences.indexWhere((s) => s.uid == uid);
+    final index = _sentences.indexWhere(
+      (s) => s.uid == uidToUpdate,
+    );
     _sentences[index] = sentence;
     final isSentenceSaved = await _preferences.setString(
       SharedPreferencesKeys.sentences,

@@ -164,11 +164,13 @@ class SentencesScreen extends StatelessWidget {
                           header:
                               AppLocalizations.of(context)!.allSentencesHeader,
                           hint: AppLocalizations.of(context)!.hintValue,
-                          onChange: (value) {
+                          onTextChange: (value) {
                             BlocProvider.of<SentenceBloc>(context).add(
                               SentenceEvent.newSentenceValueChanged(value),
                             );
                           },
+                          buttonLabel:
+                              AppLocalizations.of(context)!.addButtonLabel,
                           onAdd: () {
                             BlocProvider.of<SentenceBloc>(context).add(
                               SentenceEvent.createNewSentence(),
