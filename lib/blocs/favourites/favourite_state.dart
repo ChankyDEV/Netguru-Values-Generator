@@ -6,6 +6,7 @@ class FavouriteState with _$FavouriteState {
     required List<Sentence> favourites,
     required bool hasError,
     required bool isLoading,
+    required bool isRetryButtonClicked,
     required String errorMessage,
   }) = Initial;
 }

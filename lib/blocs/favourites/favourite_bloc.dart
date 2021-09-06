@@ -21,6 +21,7 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
             hasError: false,
             isLoading: true,
             errorMessage: '',
+            isRetryButtonClicked: false,
           ),
         );
 
@@ -28,15 +29,12 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
   Stream<FavouriteState> mapEventToState(FavouriteEvent event) async* {
     yield* event.map(
       getFavourites: _getFavourites,
+      reload: _reload,
     );
   }
 
   Stream<FavouriteState> _getFavourites(GetFavourites value) async* {
-    final failureOrFavourites = await _sentenceService.getFavouriteSentences();
-    yield failureOrFavourites.fold<FavouriteState>(
-      (l) => _showError(l),
-      (r) => _showFavourites(r),
-    );
+    yield* _favourites();
   }
 
   void getFavouriteSentences() {
@@ -58,6 +56,27 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
       favourites: favouriteSentences,
       isLoading: false,
       hasError: false,
+    );
+  }
+
+  Stream<FavouriteState> _reload(Reload value) async* {
+    yield _tapOrReleaseRetryButton();
+    await Future.delayed(const Duration(seconds: 2));
+    yield* _favourites();
+    yield _tapOrReleaseRetryButton();
+  }
+
+  FavouriteState _tapOrReleaseRetryButton() {
+    return state.copyWith(
+      isRetryButtonClicked: !state.isRetryButtonClicked,
+    );
+  }
+
+  Stream<FavouriteState> _favourites() async* {
+    final failureOrSentences = await _sentenceService.getFavouriteSentences();
+    yield failureOrSentences.fold<FavouriteState>(
+      (l) => _showError(l),
+      (r) => _showFavourites(r),
     );
   }
 }

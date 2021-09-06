@@ -19,6 +19,10 @@ class _$FavouriteEventTearOff {
   GetFavourites getFavourites() {
     return const GetFavourites();
   }
+
+  Reload reload() {
+    return const Reload();
+  }
 }
 
 /// @nodoc
@@ -29,22 +33,26 @@ mixin _$FavouriteEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getFavourites,
+    required TResult Function() reload,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getFavourites,
+    TResult Function()? reload,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(GetFavourites value) getFavourites,
+    required TResult Function(Reload value) reload,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetFavourites value)? getFavourites,
+    TResult Function(Reload value)? reload,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -108,6 +116,7 @@ class _$GetFavourites implements GetFavourites {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getFavourites,
+    required TResult Function() reload,
   }) {
     return getFavourites();
   }
@@ -116,6 +125,7 @@ class _$GetFavourites implements GetFavourites {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getFavourites,
+    TResult Function()? reload,
     required TResult orElse(),
   }) {
     if (getFavourites != null) {
@@ -128,6 +138,7 @@ class _$GetFavourites implements GetFavourites {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(GetFavourites value) getFavourites,
+    required TResult Function(Reload value) reload,
   }) {
     return getFavourites(this);
   }
@@ -136,6 +147,7 @@ class _$GetFavourites implements GetFavourites {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetFavourites value)? getFavourites,
+    TResult Function(Reload value)? reload,
     required TResult orElse(),
   }) {
     if (getFavourites != null) {
@@ -150,6 +162,89 @@ abstract class GetFavourites implements FavouriteEvent {
 }
 
 /// @nodoc
+abstract class $ReloadCopyWith<$Res> {
+  factory $ReloadCopyWith(Reload value, $Res Function(Reload) then) =
+      _$ReloadCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$ReloadCopyWithImpl<$Res> extends _$FavouriteEventCopyWithImpl<$Res>
+    implements $ReloadCopyWith<$Res> {
+  _$ReloadCopyWithImpl(Reload _value, $Res Function(Reload) _then)
+      : super(_value, (v) => _then(v as Reload));
+
+  @override
+  Reload get _value => super._value as Reload;
+}
+
+/// @nodoc
+
+class _$Reload implements Reload {
+  const _$Reload();
+
+  @override
+  String toString() {
+    return 'FavouriteEvent.reload()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is Reload);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getFavourites,
+    required TResult Function() reload,
+  }) {
+    return reload();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getFavourites,
+    TResult Function()? reload,
+    required TResult orElse(),
+  }) {
+    if (reload != null) {
+      return reload();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetFavourites value) getFavourites,
+    required TResult Function(Reload value) reload,
+  }) {
+    return reload(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetFavourites value)? getFavourites,
+    TResult Function(Reload value)? reload,
+    required TResult orElse(),
+  }) {
+    if (reload != null) {
+      return reload(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Reload implements FavouriteEvent {
+  const factory Reload() = _$Reload;
+}
+
+/// @nodoc
 class _$FavouriteStateTearOff {
   const _$FavouriteStateTearOff();
 
@@ -157,11 +252,13 @@ class _$FavouriteStateTearOff {
       {required List<Sentence> favourites,
       required bool hasError,
       required bool isLoading,
+      required bool isRetryButtonClicked,
       required String errorMessage}) {
     return Initial(
       favourites: favourites,
       hasError: hasError,
       isLoading: isLoading,
+      isRetryButtonClicked: isRetryButtonClicked,
       errorMessage: errorMessage,
     );
   }
@@ -175,19 +272,20 @@ mixin _$FavouriteState {
   List<Sentence> get favourites => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isRetryButtonClicked => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<Sentence> favourites, bool hasError,
-            bool isLoading, String errorMessage)
+            bool isLoading, bool isRetryButtonClicked, String errorMessage)
         initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Sentence> favourites, bool hasError, bool isLoading,
-            String errorMessage)?
+            bool isRetryButtonClicked, String errorMessage)?
         initial,
     required TResult orElse(),
   }) =>
@@ -218,6 +316,7 @@ abstract class $FavouriteStateCopyWith<$Res> {
       {List<Sentence> favourites,
       bool hasError,
       bool isLoading,
+      bool isRetryButtonClicked,
       String errorMessage});
 }
 
@@ -235,6 +334,7 @@ class _$FavouriteStateCopyWithImpl<$Res>
     Object? favourites = freezed,
     Object? hasError = freezed,
     Object? isLoading = freezed,
+    Object? isRetryButtonClicked = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -249,6 +349,10 @@ class _$FavouriteStateCopyWithImpl<$Res>
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRetryButtonClicked: isRetryButtonClicked == freezed
+          ? _value.isRetryButtonClicked
+          : isRetryButtonClicked // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: errorMessage == freezed
           ? _value.errorMessage
@@ -267,6 +371,7 @@ abstract class $InitialCopyWith<$Res> implements $FavouriteStateCopyWith<$Res> {
       {List<Sentence> favourites,
       bool hasError,
       bool isLoading,
+      bool isRetryButtonClicked,
       String errorMessage});
 }
 
@@ -284,6 +389,7 @@ class _$InitialCopyWithImpl<$Res> extends _$FavouriteStateCopyWithImpl<$Res>
     Object? favourites = freezed,
     Object? hasError = freezed,
     Object? isLoading = freezed,
+    Object? isRetryButtonClicked = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(Initial(
@@ -298,6 +404,10 @@ class _$InitialCopyWithImpl<$Res> extends _$FavouriteStateCopyWithImpl<$Res>
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRetryButtonClicked: isRetryButtonClicked == freezed
+          ? _value.isRetryButtonClicked
+          : isRetryButtonClicked // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: errorMessage == freezed
           ? _value.errorMessage
@@ -314,6 +424,7 @@ class _$Initial implements Initial {
       {required this.favourites,
       required this.hasError,
       required this.isLoading,
+      required this.isRetryButtonClicked,
       required this.errorMessage});
 
   @override
@@ -323,11 +434,13 @@ class _$Initial implements Initial {
   @override
   final bool isLoading;
   @override
+  final bool isRetryButtonClicked;
+  @override
   final String errorMessage;
 
   @override
   String toString() {
-    return 'FavouriteState.initial(favourites: $favourites, hasError: $hasError, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'FavouriteState.initial(favourites: $favourites, hasError: $hasError, isLoading: $isLoading, isRetryButtonClicked: $isRetryButtonClicked, errorMessage: $errorMessage)';
   }
 
   @override
@@ -343,6 +456,9 @@ class _$Initial implements Initial {
             (identical(other.isLoading, isLoading) ||
                 const DeepCollectionEquality()
                     .equals(other.isLoading, isLoading)) &&
+            (identical(other.isRetryButtonClicked, isRetryButtonClicked) ||
+                const DeepCollectionEquality().equals(
+                    other.isRetryButtonClicked, isRetryButtonClicked)) &&
             (identical(other.errorMessage, errorMessage) ||
                 const DeepCollectionEquality()
                     .equals(other.errorMessage, errorMessage)));
@@ -354,6 +470,7 @@ class _$Initial implements Initial {
       const DeepCollectionEquality().hash(favourites) ^
       const DeepCollectionEquality().hash(hasError) ^
       const DeepCollectionEquality().hash(isLoading) ^
+      const DeepCollectionEquality().hash(isRetryButtonClicked) ^
       const DeepCollectionEquality().hash(errorMessage);
 
   @JsonKey(ignore: true)
@@ -365,22 +482,24 @@ class _$Initial implements Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<Sentence> favourites, bool hasError,
-            bool isLoading, String errorMessage)
+            bool isLoading, bool isRetryButtonClicked, String errorMessage)
         initial,
   }) {
-    return initial(favourites, hasError, isLoading, errorMessage);
+    return initial(
+        favourites, hasError, isLoading, isRetryButtonClicked, errorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Sentence> favourites, bool hasError, bool isLoading,
-            String errorMessage)?
+            bool isRetryButtonClicked, String errorMessage)?
         initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(favourites, hasError, isLoading, errorMessage);
+      return initial(
+          favourites, hasError, isLoading, isRetryButtonClicked, errorMessage);
     }
     return orElse();
   }
@@ -411,6 +530,7 @@ abstract class Initial implements FavouriteState {
       {required List<Sentence> favourites,
       required bool hasError,
       required bool isLoading,
+      required bool isRetryButtonClicked,
       required String errorMessage}) = _$Initial;
 
   @override
@@ -419,6 +539,8 @@ abstract class Initial implements FavouriteState {
   bool get hasError => throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;
+  @override
+  bool get isRetryButtonClicked => throw _privateConstructorUsedError;
   @override
   String get errorMessage => throw _privateConstructorUsedError;
   @override

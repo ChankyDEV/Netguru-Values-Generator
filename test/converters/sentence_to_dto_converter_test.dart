@@ -13,7 +13,7 @@ void main() {
   );
 
   group('convert', () {
-    final tSentence = Sentence('value', true);
+    final tSentence = Sentence('', 'value', true);
     final tSentenceDto = SentenceDTO('123', 'value', true);
     test('should convert sentence to dto', () {
       when(generator.v4()).thenReturn('123');

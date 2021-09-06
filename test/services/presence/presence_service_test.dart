@@ -20,26 +20,34 @@ void main() {
   late MockSentenceToDtoConverter converter;
   final tBasicSentences = <Sentence>[
     Sentence(
+      '',
       "Exceed clients' and colleagues' expectations",
       false,
     ),
     Sentence(
+        '',
         "Take ownership and question the status quo in a constructive manner",
         false),
     Sentence(
+        '',
         "Be brave, curious and experiment. Learn from all successes and failures",
         false),
     Sentence(
+      '',
       "Act in a way that makes all of us proud",
       false,
     ),
-    Sentence("Build an inclusive, transparent and socially responsible culture",
+    Sentence(
+        '',
+        "Build an inclusive, transparent and socially responsible culture",
         false),
     Sentence(
+      '',
       "Be ambitious, grow yourself and the people around you",
       false,
     ),
     Sentence(
+      '',
       "Recognize excellence and engagement",
       false,
     ),

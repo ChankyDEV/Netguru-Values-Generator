@@ -22,7 +22,7 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
       : super(
           SentenceState.initial(
             sentences: [],
-            actualSentence: Sentence('', false),
+            actualSentence: Sentence('', '', false),
             didActualSentenceChange: false,
             newSentenceValue: '',
             hasError: false,
@@ -107,11 +107,14 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
         await _sentenceService.saveSentence(e.sentence);
     yield failureOrSavedSentence.fold<SentenceState>(
       (l) => _processError(l),
-      (r) => _updateSentences(r),
+      (r) {
+        print(r.uid + 'xdddddddddddd2');
+        return _updateSentences(r);
+      },
     );
   }
 
-  _updateSentences(Sentence sentence) {
+  SentenceState _updateSentences(Sentence sentence) {
     final index = state.sentences.indexWhere(
       (element) => element.uid == sentence.uid,
     );
@@ -136,22 +139,22 @@ class SentenceBloc extends Bloc<SentenceEvent, SentenceState> {
   }
 
   Stream<SentenceState> _createNewSentence(CreateNewSentence e) async* {
-    final sentence = Sentence(state.newSentenceValue, false);
+    final sentence = Sentence('', state.newSentenceValue, false);
     final failureOrSentence = await _sentenceService.saveSentence(sentence);
     yield failureOrSentence.fold<SentenceState>(
       (l) => _processError(l),
-      (r) => _updateSentences(sentence),
+      (r) => _updateSentences(r),
     );
   }
 
   Stream<SentenceState> _reload(Reload value) async* {
     yield _tapOrReleaseRetryButton();
     await Future.delayed(const Duration(seconds: 2));
-    yield* allCategories();
+    yield* _allSentences();
     yield _tapOrReleaseRetryButton();
   }
 
-  Stream<SentenceState> allCategories() async* {
+  Stream<SentenceState> _allSentences() async* {
     final failureOrSentences = await _sentenceService.getAllSentences();
     yield failureOrSentences.fold<SentenceState>(
       (l) => _processError(l),

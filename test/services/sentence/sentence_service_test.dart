@@ -18,6 +18,7 @@ void main() async {
   late MockSentenceToDtoConverter converter;
 
   final sentenceToSave = Sentence(
+    '',
     'value1',
     true,
   );
@@ -30,9 +31,9 @@ void main() async {
   ];
 
   final tSentences = [
-    Sentence.withUid('120', 'value1', true),
-    Sentence.withUid('121', 'value2', true),
-    Sentence.withUid('122', 'value3', true),
+    Sentence('120', 'value1', true),
+    Sentence('121', 'value2', true),
+    Sentence('122', 'value3', true),
   ];
 
   setUpAll(() {
@@ -57,7 +58,9 @@ void main() async {
     test(
         'should return left with sentence failure when repository throws sentence exception',
         () async {
-      when(repository.getAllSentences()).thenThrow(SentenceException());
+      when(repository.getAllSentences()).thenThrow(SentenceException(
+        message: SentenceErrorMessages.cantGetSentences,
+      ));
       final sentences = await service.getAllSentences();
       verify(repository.getAllSentences());
       expect(
@@ -86,9 +89,11 @@ void main() async {
       );
     });
 
-    test('should return left(Failure) if saved sentence went unsuccessfully',
-        () async {
-      when(repository.saveSentence(any)).thenThrow(SentenceException());
+    test('''should return left(Failure) with particular message 
+        if saving sentence went unsuccessfully''', () async {
+      when(repository.saveSentence(any)).thenThrow(SentenceException(
+        message: SentenceErrorMessages.cantSaveSentence,
+      ));
       when(converter.convertToDto(any)).thenReturn(saveSentenceWithUid);
       final sentence = await service.saveSentence(sentenceToSave);
 
@@ -105,7 +110,7 @@ void main() async {
   });
 
   group('replaceAll', () {
-    final tListSentences = <Sentence>[Sentence('value', false)];
+    final tListSentences = <Sentence>[Sentence('', 'value', false)];
     final tListDtos = <SentenceDTO>[SentenceDTO('123', 'value', false)];
     test('should return unit if successfully replaced list in cache', () async {
       when(converter.convertAllToDtos(any)).thenReturn(tListDtos);
@@ -138,8 +143,8 @@ void main() async {
   ];
 
   final tFavourites = [
-    Sentence.withUid('123', 'value1', true),
-    Sentence.withUid('124', 'value2', true),
+    Sentence('123', 'value1', true),
+    Sentence('124', 'value2', true),
   ];
 
   group('getFavourites', () {

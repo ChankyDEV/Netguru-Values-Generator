@@ -42,6 +42,6 @@ class SentenceConverter {
   }
 
   Sentence _convertFromDto(SentenceDTO dto) {
-    return Sentence.withUid(dto.uid, dto.value, dto.isFavourite);
+    return Sentence(dto.uid, dto.value, dto.isFavourite);
   }
 }

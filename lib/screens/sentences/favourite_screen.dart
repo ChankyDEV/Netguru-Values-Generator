@@ -34,18 +34,28 @@ class FavouritesScreen extends StatelessWidget {
                     context,
                     state.favourites,
                   )
-                : _showErrorScreen(context, state.errorMessage),
+                : _showErrorScreen(
+                    context,
+                    state.errorMessage,
+                    state.isRetryButtonClicked,
+                  ),
       ),
     );
   }
 
-  Widget _showErrorScreen(BuildContext context, String errorMessage) {
+  Widget _showErrorScreen(
+    BuildContext context,
+    String errorMessage,
+    bool isRetryButtonClicked,
+  ) {
     final msg = errorMessage == SentenceErrorMessages.noFavouriteSentences
         ? 'No favourites here :/'
         : 'Somehow we can\'t get your favourites';
     final icon = errorMessage == SentenceErrorMessages.noFavouriteSentences
         ? Icons.favorite_outline
         : Icons.cancel_outlined;
+    final showButton =
+        errorMessage != SentenceErrorMessages.noFavouriteSentences;
     return ErrorScreen(
       information: msg,
       child: ScaledContainer(
@@ -54,15 +64,15 @@ class FavouritesScreen extends StatelessWidget {
         shape: BoxShape.circle,
         child: ScaledIcon(
           scale: 8,
-          icon: Icons.favorite_outline,
+          icon: icon,
           color: ColorUtils.of(context).background,
         ),
       ),
-      isRetryButtonClicked: false,
+      isRetryButtonClicked: isRetryButtonClicked,
       onRetryButtonClick: () => BlocProvider.of<FavouriteBloc>(context).add(
-        FavouriteEvent.getFavourites(),
+        FavouriteEvent.reload(),
       ),
-      showButton: false,
+      showButton: showButton,
     );
   }
 }

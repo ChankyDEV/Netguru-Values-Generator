@@ -2,16 +2,11 @@ import 'package:equatable/equatable.dart';
 
 //ignore: must_be_immutable
 class Sentence extends Equatable {
-  String _uid = '';
+  String _uid;
   String _value;
   bool _isFavourite;
 
   Sentence(
-    this._value,
-    this._isFavourite,
-  );
-
-  Sentence.withUid(
     this._uid,
     this._value,
     this._isFavourite,

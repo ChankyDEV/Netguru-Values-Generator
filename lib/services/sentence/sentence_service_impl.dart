@@ -39,7 +39,9 @@ class SentenceServiceImpl implements SentenceService {
     try {
       final dto = _converter.convertToDto(sentenceToSave);
       final sentence = await _repository.saveSentence(dto);
-      return right(_converter.convertFromDto(sentence));
+      final savedSentence = _converter.convertFromDto(sentence);
+      print(savedSentence.uid + 'xD');
+      return right(savedSentence);
     } on SentenceException catch (e) {
       return left(
         Failure(

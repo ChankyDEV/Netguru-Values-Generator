@@ -17,7 +17,7 @@ void main() {
     "Take ownership and question the status quo in a constructive manner",
     false,
   );
-  final tSentence = Sentence.withUid(
+  final tSentence = Sentence(
     '123',
     "Exceed clients' and colleagues' expectations",
     true,

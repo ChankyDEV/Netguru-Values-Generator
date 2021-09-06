@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netguru_values_generator/blocs/all_sentences/all_sentences_bloc.dart';
+import 'package:netguru_values_generator/blocs/favourites/favourite_bloc.dart';
 import 'package:netguru_values_generator/models/sentence.dart';
 import 'package:netguru_values_generator/screens/color_utils.dart';
 import 'package:netguru_values_generator/screens/core/error_screen.dart';
@@ -69,7 +70,10 @@ class AllSentencesScreen extends StatelessWidget {
     );
   }
 
-  Widget _showErrorScreen(BuildContext context, bool isRetryButtonClicked) {
+  Widget _showErrorScreen(
+    BuildContext context,
+    bool isRetryButtonClicked,
+  ) {
     return ErrorScreen(
       information: 'We can\'t show you all sentences :(',
       isRetryButtonClicked: isRetryButtonClicked,
@@ -88,8 +92,8 @@ class AllSentencesScreen extends StatelessWidget {
   }
 
   void getFavourites(BuildContext context) {
-    BlocProvider.of<AllSentencesBloc>(context).add(
-      AllSentencesEvent.reload(),
+    BlocProvider.of<FavouriteBloc>(context).add(
+      FavouriteEvent.reload(),
     );
   }
 }

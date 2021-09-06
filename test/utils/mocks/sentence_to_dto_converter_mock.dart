@@ -26,8 +26,8 @@ class MockSentenceToDtoConverter extends Mock implements SentenceConverter {
   Sentence convertFromDto(SentenceDTO? dto) {
     return super.noSuchMethod(
       Invocation.method(#convertFromDto, [dto]),
-      returnValueForMissingStub: Sentence('', false),
-      returnValue: Sentence('', false),
+      returnValueForMissingStub: Sentence('', '', false),
+      returnValue: Sentence('', '', false),
     );
   }
 
@@ -35,8 +35,8 @@ class MockSentenceToDtoConverter extends Mock implements SentenceConverter {
   List<Sentence> convertAllFromDtos(List<SentenceDTO>? dtos) {
     return super.noSuchMethod(
       Invocation.method(#convertAllFromDtos, [dtos]),
-      returnValueForMissingStub: [Sentence('', false)],
-      returnValue: [Sentence('', false)],
+      returnValueForMissingStub: [Sentence('', '', false)],
+      returnValue: [Sentence('', '', false)],
     );
   }
 }
